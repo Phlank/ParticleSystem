@@ -1,90 +1,96 @@
 #include "Particle.h"
 
 Particle::Particle() {
-    pos;
-    vel;
-    acc;
-    jer;
+    position;
+    velocity;
+    acceleration;
+    jerk;
 }
 
-Particle::Particle(Point pos_) {
-    pos = pos_;
+Particle::Particle(Point position_) {
+    position = position_;
+    velocity;
+    acceleration;
+    jerk;
 }
 
-Particle::Particle(Point pos_, Point vel_) {
-    pos = pos_;
-    vel = vel_;
+Particle::Particle(Point position_, Point velocity_) {
+    position = position_;
+    velocity = velocity_;
+    acceleration;
+    jerk;
 }
 
-Particle::Particle(Point pos_, Point vel_, Point acc_) {
-    pos = pos_;
-    vel = vel_;
-    acc = acc_;
+Particle::Particle(Point position_, Point velocity_, Point acceleration_) {
+    position = position_;
+    velocity = velocity_;
+    acceleration = acceleration_;
+    jerk;
 }
 
-Particle::Particle(Point pos_, Point vel_, Point acc_, Point jer_) {
-    pos = pos_;
-    vel = vel_;
-    acc = acc_;
-    jer = jer_;
+Particle::Particle(Point position_, Point velocity_, Point acceleration_, Point jerk_) {
+    position = position_;
+    velocity = velocity_;
+    acceleration = acceleration_;
+    jerk = jerk_;
 }
 
 Particle::Particle(const Particle& orig) {
-    pos = orig.pos;
-    vel = orig.vel;
-    acc = orig.acc;
-    jer = orig.jer;
+    position = orig.position;
+    velocity = orig.velocity;
+    acceleration = orig.acceleration;
+    jerk = orig.jerk;
 }
 
 Particle::~Particle() {
-    pos.~Point();
-    vel.~Point();
-    acc.~Point();
-    jer.~Point();
+    position.~Point();
+    velocity.~Point();
+    acceleration.~Point();
+    jerk.~Point();
 }
 
-Point Particle::getPos() {
-    return pos;
+Point Particle::getPosition() {
+    return position;
 }
 
-Point Particle::getVel() {
-    return vel;
+Point Particle::getVelocity() {
+    return velocity;
 }
 
-Point Particle::getAcc() {
-    return acc;
+Point Particle::getAcceleration() {
+    return acceleration;
 }
 
-Point Particle::getJer() {
-    return jer;
+Point Particle::getJerk() {
+    return jerk;
 }
 
-void Particle::setPos(Point pos_) {
-    pos = pos_;
+void Particle::setPosition(Point position_) {
+    position = position_;
 }
 
-void Particle::setVel(Point vel_) {
-    vel = vel_;
+void Particle::setVelocity(Point velocity_) {
+    velocity = velocity_;
 }
 
-void Particle::setAcc(Point acc_) {
-    acc = acc_;
+void Particle::setAcceleration(Point acceleration_) {
+    acceleration = acceleration_;
 }
 
-void Particle::setJer(Point jer_) {
-    jer = jer_;
+void Particle::setJerk(Point jerk_) {
+    jerk = jerk_;
 }
 
 void Particle::runFrame() {
-    long double inAccX = acc.getX();
-    long double inAccY = acc.getY();
-    long double inVelX = vel.getX();
-    long double inVelY = vel.getY();
-    acc.setX(inAccX+jer.getX());
-    acc.setY(inAccY+jer.getY());
-    vel.setX(inVelX+(inAccX+acc.getX())/2);
-    vel.setY(inVelY+(inAccY+acc.getY())/2);
-    pos.setX(pos.getX()+(inVelX+vel.getX())/2);
-    pos.setY(pos.getY()+(inVelY+vel.getY())/2);
+    long double inAccX = acceleration.getX();
+    long double inAccY = acceleration.getY();
+    long double inVelX = velocity.getX();
+    long double inVelY = velocity.getY();
+    acceleration.setX(inAccX+jerk.getX());
+    acceleration.setY(inAccY+jerk.getY());
+    velocity.setX(inVelX+(inAccX+acceleration.getX())/2);
+    velocity.setY(inVelY+(inAccY+acceleration.getY())/2);
+    position.setX(position.getX()+(inVelX+velocity.getX())/2);
+    position.setY(position.getY()+(inVelY+velocity.getY())/2);
 }
 

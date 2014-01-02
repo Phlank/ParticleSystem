@@ -1,45 +1,45 @@
 #include "Pixel.h"
 
 Pixel::Pixel() : Particle() {
-    red = DEF_RED;
-    green = DEF_GREEN;
-    blue = DEF_BLUE;
-    opacity = DEF_OPACITY;
+    red = DEFAULT_RED;
+    green = DEFAULT_GREEN;
+    blue = DEFAULT_BLUE;
+    opacity = DEFAULT_OPACITY;
 }
 
 Pixel::Pixel(Point pos_) : Particle(pos_) {
-    red = DEF_RED;
-    green = DEF_GREEN;
-    blue = DEF_BLUE;
-    opacity = DEF_OPACITY;
+    red = DEFAULT_RED;
+    green = DEFAULT_GREEN;
+    blue = DEFAULT_BLUE;
+    opacity = DEFAULT_OPACITY;
 }
 
 Pixel::Pixel(Point pos_, Point vel_) : Particle(pos_, vel_) {
-    red = DEF_RED;
-    green = DEF_GREEN;
-    blue = DEF_BLUE;
-    opacity = DEF_OPACITY;
+    red = DEFAULT_RED;
+    green = DEFAULT_GREEN;
+    blue = DEFAULT_BLUE;
+    opacity = DEFAULT_OPACITY;
 }
 
 Pixel::Pixel(Point pos_, Point vel_, Point acc_) : Particle(pos_, vel_, acc_) {
-    red = DEF_RED;
-    green = DEF_GREEN;
-    blue = DEF_BLUE;
-    opacity = DEF_OPACITY;
+    red = DEFAULT_RED;
+    green = DEFAULT_GREEN;
+    blue = DEFAULT_BLUE;
+    opacity = DEFAULT_OPACITY;
 }
 
 Pixel::Pixel(Point pos_, Point vel_, Point acc_, Point jer_) : Particle(pos_, vel_, acc_, jer_) {
-    red = DEF_RED;
-    green = DEF_GREEN;
-    blue = DEF_BLUE;
-    opacity = DEF_OPACITY;
+    red = DEFAULT_RED;
+    green = DEFAULT_GREEN;
+    blue = DEFAULT_BLUE;
+    opacity = DEFAULT_OPACITY;
 }
 
 Pixel::Pixel(int red_, int green_, int blue_) : Particle() {
     red = red_;
     green = green_;
     blue = blue_;
-    opacity = DEF_OPACITY;
+    opacity = DEFAULT_OPACITY;
 }
 
 Pixel::Pixel(int red_, int green_, int blue_, int opacity_) : Particle() {
@@ -53,7 +53,7 @@ Pixel::Pixel(int red_, int green_, int blue_, Point pos_) : Particle(pos_) {
     red = red_;
     green = green_;
     blue = blue_;
-    opacity = DEF_OPACITY;
+    opacity = DEFAULT_OPACITY;
 }
 
 Pixel::Pixel(int red_, int green_, int blue_, int opacity_, Point pos_) : Particle(pos_) {
@@ -67,7 +67,7 @@ Pixel::Pixel(int red_, int green_, int blue_, Point pos_, Point vel_) : Particle
     red = red_;
     green = green_;
     blue = blue_;
-    opacity = DEF_OPACITY;
+    opacity = DEFAULT_OPACITY;
 }
 
 Pixel::Pixel(int red_, int green_, int blue_, int opacity_, Point pos_, Point vel_) : Particle(pos_, vel_) {
@@ -81,7 +81,7 @@ Pixel::Pixel(int red_, int green_, int blue_, Point pos_, Point vel_, Point acc_
     red = red_;
     green = green_;
     blue = blue_;
-    opacity = DEF_OPACITY;
+    opacity = DEFAULT_OPACITY;
 }
 
 Pixel::Pixel(int red_, int green_, int blue_, int opacity_, Point pos_, Point vel_, Point acc_) : Particle(pos_, vel_, acc_) {
@@ -95,7 +95,7 @@ Pixel::Pixel(int red_, int green_, int blue_, Point pos_, Point vel_, Point acc_
     red = red_;
     green = green_;
     blue = blue_;
-    opacity = DEF_OPACITY;
+    opacity = DEFAULT_OPACITY;
 }
 
 Pixel::Pixel(int red_, int green_, int blue_, int opacity_, Point pos_, Point vel_, Point acc_, Point jer_) : Particle(pos_, vel_, acc_, jer_) {

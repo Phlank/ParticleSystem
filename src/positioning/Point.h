@@ -3,8 +3,8 @@
 
 #include <cstdlib>
 
-static const long double DEF_X = 0.0;
-static const long double DEF_Y = 0.0;
+static const long double DEFAULT_X = 0.0;
+static const long double DEFAULT_Y = 0.0;
 
 class Point {
 public:

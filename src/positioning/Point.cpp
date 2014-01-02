@@ -1,8 +1,8 @@
 #include "Point.h"
 
 Point::Point() {
-    x = DEF_X;
-    y = DEF_Y;
+    x = DEFAULT_X;
+    y = DEFAULT_Y;
 }
 
 Point::Point(long double x_, long double y_) {

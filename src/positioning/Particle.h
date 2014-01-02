@@ -11,38 +11,38 @@ public:
     /** Constructs a new Particle with default values. */
     Particle();
     /** Constructs a new Particle with the given position. */
-    Particle(Point pos_);
+    Particle(Point position_);
     /** Constructs a new Particle with the given position and one derivative. */
-    Particle(Point pos_, Point vel_);
+    Particle(Point position_, Point velocity_);
     /** Constructs a new Particle with the given position and two derivatives. */
-    Particle(Point pos_, Point vel_, Point acc_);
+    Particle(Point position_, Point velocity_, Point acceleration_);
     /** Constructs a new Particle with the given position and three derivatives. */
-    Particle(Point pos_, Point vel_, Point acc_, Point jer_);
+    Particle(Point position_, Point velocity_, Point acceleration_, Point jerk_);
     /** Constructs a new Particle based on a given one. */
     Particle(const Particle& orig);
     /** Class destructor. */
     virtual ~Particle();
     /** Returns the position. */
-    Point getPos();
+    Point getPosition();
     /** Returns the velocity. */
-    Point getVel();
+    Point getVelocity();
     /** Returns the acceleration. */
-    Point getAcc();
+    Point getAcceleration();
     /** Returns the jerk. */
-    Point getJer();
+    Point getJerk();
     /** Sets the position. */
-    void setPos(Point pos_);
+    void setPosition(Point position_);
     /** Sets the velocity. */
-    void setVel(Point vel_);
+    void setVelocity(Point velocity_);
     /** Sets the acceleration. */
-    void setAcc(Point acc_);
+    void setAcceleration(Point acceleration_);
     /** Sets the jerk. */
-    void setJer(Point jer_);
+    void setJerk(Point jerk_);
     /** Runs through a frame of activity. The position will change based on the 
      derivatives given. */
     void runFrame();
 private:
-    Point pos, vel, acc, jer;
+    Point position, velocity, acceleration, jerk;
 };
 
 #endif

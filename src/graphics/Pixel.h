@@ -6,10 +6,10 @@
 
 using namespace std;
 
-static const uint8_t DEF_RED = 0;
-static const uint8_t DEF_GREEN = 0;
-static const uint8_t DEF_BLUE = 0;
-static const uint8_t DEF_OPACITY = 255;
+static const uint8_t DEFAULT_RED = 0;
+static const uint8_t DEFAULT_GREEN = 0;
+static const uint8_t DEFAULT_BLUE = 0;
+static const uint8_t DEFAULT_OPACITY = 255;
 
 class Pixel : public Particle {
 public:
