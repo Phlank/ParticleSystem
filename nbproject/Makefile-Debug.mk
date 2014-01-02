@@ -45,8 +45,8 @@ OBJECTFILES= \
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=
-CXXFLAGS=
+CCFLAGS=$(sdl2-config --cflags --libs)
+CXXFLAGS=$(sdl2-config --cflags --libs)
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -63,7 +63,7 @@ LDLIBSOPTIONS=
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/particlesystem: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/particlesystem ${OBJECTFILES} ${LDLIBSOPTIONS}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/particlesystem ${OBJECTFILES} ${LDLIBSOPTIONS} -lSDL2
 
 ${OBJECTDIR}/src/graphics/Pixel.o: src/graphics/Pixel.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/graphics

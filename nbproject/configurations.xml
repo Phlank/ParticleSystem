@@ -6,6 +6,7 @@
                    projectFiles="true">
       <logicalFolder name="f1" displayName="Classes" projectFiles="true">
         <itemPath>src/positioning/Particle.h</itemPath>
+        <itemPath>src/graphics/Pixel.h</itemPath>
         <itemPath>src/positioning/Point.h</itemPath>
       </logicalFolder>
     </logicalFolder>
@@ -18,6 +19,7 @@
                    projectFiles="true">
       <logicalFolder name="f1" displayName="Classes" projectFiles="true">
         <itemPath>src/positioning/Particle.cpp</itemPath>
+        <itemPath>src/graphics/Pixel.cpp</itemPath>
         <itemPath>src/positioning/Point.cpp</itemPath>
       </logicalFolder>
       <itemPath>src/main.cpp</itemPath>
@@ -33,8 +35,6 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
-    <itemPath>src/graphics/Pixel.cpp</itemPath>
-    <itemPath>src/graphics/Pixel.h</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -45,6 +45,12 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
+        <ccTool>
+          <commandLine>$(sdl2-config --cflags --libs)</commandLine>
+        </ccTool>
+        <linkerTool>
+          <commandLine>-lSDL2</commandLine>
+        </linkerTool>
       </compileType>
       <item path="src/graphics/Pixel.cpp" ex="false" tool="1" flavor2="0">
       </item>

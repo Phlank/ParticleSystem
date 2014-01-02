@@ -82,15 +82,15 @@ void Particle::setJerk(Point jerk_) {
 }
 
 void Particle::runFrame() {
-    long double inAccX = acceleration.getX();
-    long double inAccY = acceleration.getY();
-    long double inVelX = velocity.getX();
-    long double inVelY = velocity.getY();
-    acceleration.setX(inAccX+jerk.getX());
-    acceleration.setY(inAccY+jerk.getY());
-    velocity.setX(inVelX+(inAccX+acceleration.getX())/2);
-    velocity.setY(inVelY+(inAccY+acceleration.getY())/2);
-    position.setX(position.getX()+(inVelX+velocity.getX())/2);
-    position.setY(position.getY()+(inVelY+velocity.getY())/2);
+    long double initialAccelerationX = acceleration.getX();
+    long double initialAccelerationY = acceleration.getY();
+    long double initialVelocityX = velocity.getX();
+    long double initialVelocityY = velocity.getY();
+    acceleration.setX(initialAccelerationX+jerk.getX());
+    acceleration.setY(initialAccelerationY+jerk.getY());
+    velocity.setX(initialVelocityX+(initialAccelerationX+acceleration.getX())/2);
+    velocity.setY(initialVelocityY+(initialAccelerationY+acceleration.getY())/2);
+    position.setX(position.getX()+(initialVelocityX+velocity.getX())/2);
+    position.setY(position.getY()+(initialVelocityY+velocity.getY())/2);
 }
 
