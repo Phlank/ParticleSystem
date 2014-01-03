@@ -20,13 +20,18 @@ public:
     virtual ~Window();
     void addPixel(Pixel pixel);
     void draw();
+    void dump();
+    bool getClearing();
+    void setClearing(bool clearing_);
 private:
     void clear();
     void drawPixels();
     int width, height;
     SDL_Window* window;
     SDL_Renderer* renderer;
+    SDL_Cursor* cursor;
     std::vector<Pixel> pixels;
+    bool clearing;
 };
 
 #endif

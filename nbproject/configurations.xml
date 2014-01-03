@@ -48,7 +48,8 @@
       </toolsSet>
       <compileType>
         <ccTool>
-          <commandLine>$(sdl2-config --cflags --libs)</commandLine>
+          <commandLine>$(sdl2-config --cflags --libs) -O3</commandLine>
+          <warningLevel>3</warningLevel>
         </ccTool>
         <linkerTool>
           <commandLine>-lSDL2</commandLine>

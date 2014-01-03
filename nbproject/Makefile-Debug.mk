@@ -46,8 +46,8 @@ OBJECTFILES= \
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=$(sdl2-config --cflags --libs)
-CXXFLAGS=$(sdl2-config --cflags --libs)
+CCFLAGS=$(sdl2-config --cflags --libs) -O3
+CXXFLAGS=$(sdl2-config --cflags --libs) -O3
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -69,27 +69,27 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/particlesystem: ${OBJECTFILES}
 ${OBJECTDIR}/src/display/Window.o: src/display/Window.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/display
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/display/Window.o src/display/Window.cpp
+	$(COMPILE.cc) -g -Werror -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/display/Window.o src/display/Window.cpp
 
 ${OBJECTDIR}/src/graphics/Pixel.o: src/graphics/Pixel.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/graphics
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/graphics/Pixel.o src/graphics/Pixel.cpp
+	$(COMPILE.cc) -g -Werror -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/graphics/Pixel.o src/graphics/Pixel.cpp
 
 ${OBJECTDIR}/src/main.o: src/main.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/main.o src/main.cpp
+	$(COMPILE.cc) -g -Werror -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/main.o src/main.cpp
 
 ${OBJECTDIR}/src/positioning/Particle.o: src/positioning/Particle.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/positioning
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/positioning/Particle.o src/positioning/Particle.cpp
+	$(COMPILE.cc) -g -Werror -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/positioning/Particle.o src/positioning/Particle.cpp
 
 ${OBJECTDIR}/src/positioning/Point.o: src/positioning/Point.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/positioning
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/positioning/Point.o src/positioning/Point.cpp
+	$(COMPILE.cc) -g -Werror -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/positioning/Point.o src/positioning/Point.cpp
 
 # Subprojects
 .build-subprojects:

@@ -1,9 +1,12 @@
 #include "Window.h"
 
 Window::Window() {
-    window = SDL_CreateWindow(DEFAULT_NAME, DEFAULT_WINDOW_X, DEFAULT_WINDOW_Y, DEFAULT_WINDOW_W, DEFAULT_WINDOW_H, DEFAULT_WINDOW_FLAGS);
+    window = SDL_CreateWindow(DEFAULT_NAME, DEFAULT_WINDOW_X, DEFAULT_WINDOW_Y, 640, 480, DEFAULT_WINDOW_FLAGS);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);
     SDL_GetWindowSize(window, &width, &height);
+    SDL_WarpMouseInWindow(window, width/2, height/2);
+    clearing = true;
 }
 
 Window::~Window() {
@@ -16,9 +19,23 @@ void Window::addPixel(Pixel pixel) {
 }
 
 void Window::draw() {
-    clear();
+    if (clearing) clear();
     drawPixels();
     SDL_RenderPresent(renderer);
+}
+
+void Window::dump() {
+    while (pixels.begin() != pixels.end()) {
+        pixels.erase(pixels.begin());
+    }
+}
+
+bool Window::getClearing() {
+    return clearing;
+}
+
+void Window::setClearing(bool clearing_) {
+    clearing = clearing_;
 }
 
 void Window::clear() {
@@ -27,23 +44,24 @@ void Window::clear() {
 }
 
 void Window::drawPixels() {
-    std::vector<Pixel>::iterator pixelIterator = pixels.begin();
-    while (pixelIterator != pixels.end()) {
-        int oldPixelX = pixelIterator.base()->getPosition().getX();
-        int oldPixelY = pixelIterator.base()->getPosition().getY();
-        pixelIterator.base()->runFrame();
-        int currPixelX = pixelIterator.base()->getPosition().getX();
-        int currPixelY = pixelIterator.base()->getPosition().getY();
-        if (currPixelX < -DEFAULT_PIXEL_PADDING || currPixelX > width+DEFAULT_PIXEL_PADDING || currPixelY < -DEFAULT_PIXEL_PADDING || currPixelY > height+DEFAULT_PIXEL_PADDING) {
-            pixels.erase(pixelIterator);
-        }
-        else {
-            SDL_SetRenderDrawColor(renderer, pixelIterator.base()->getRed(), pixelIterator.base()->getGreen(), pixelIterator.base()->getBlue(), pixelIterator.base()->getOpacity());
-            if (pixelIterator.base()->getRenderLineMode())
-                SDL_RenderDrawLine(renderer, currPixelX, currPixelY, oldPixelX, oldPixelY);
+    int i;
+    double oldX, oldY;
+    std::vector<Pixel>::iterator iter = pixels.begin();
+    while (iter != pixels.end()) {
+        oldX = iter.base()->getPosition().getX();
+        oldY = iter.base()->getPosition().getY();
+        iter.base()->runFrame();
+//        if (iter.base()->getPosition().getX() < -100 || iter.base()->getPosition().getX() > width+100 || iter.base()->getPosition().getY() < -100 || iter.base()->getPosition().getY() > height+100) {
+//            iter = pixels.erase(iter);
+//        }
+//        else {
+            SDL_SetRenderDrawColor(renderer, iter.base()->getRed(), iter.base()->getGreen(), iter.base()->getBlue(), iter.base()->getOpacity());
+            if (iter.base()->getRenderLineMode())
+                SDL_RenderDrawLine(renderer, oldX, oldY, iter.base()->getPosition().getX(), iter.base()->getPosition().getY());
             else
-                SDL_RenderDrawPoint(renderer, currPixelX, currPixelY);
-        }
+                SDL_RenderDrawPoint(renderer, iter.base()->getPosition().getX(), iter.base()->getPosition().getY());
+            iter++;
+//        }
     }
 }
 
