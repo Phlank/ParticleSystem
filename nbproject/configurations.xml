@@ -8,6 +8,7 @@
         <itemPath>src/positioning/Particle.h</itemPath>
         <itemPath>src/graphics/Pixel.h</itemPath>
         <itemPath>src/positioning/Point.h</itemPath>
+        <itemPath>src/display/Window.h</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -21,6 +22,7 @@
         <itemPath>src/positioning/Particle.cpp</itemPath>
         <itemPath>src/graphics/Pixel.cpp</itemPath>
         <itemPath>src/positioning/Point.cpp</itemPath>
+        <itemPath>src/display/Window.cpp</itemPath>
       </logicalFolder>
       <itemPath>src/main.cpp</itemPath>
     </logicalFolder>
@@ -52,6 +54,10 @@
           <commandLine>-lSDL2</commandLine>
         </linkerTool>
       </compileType>
+      <item path="src/display/Window.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/display/Window.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/graphics/Pixel.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/graphics/Pixel.h" ex="false" tool="3" flavor2="0">
@@ -87,6 +93,10 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="src/display/Window.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/display/Window.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/graphics/Pixel.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/graphics/Pixel.h" ex="false" tool="3" flavor2="0">

@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/src/display/Window.o \
 	${OBJECTDIR}/src/graphics/Pixel.o \
 	${OBJECTDIR}/src/main.o \
 	${OBJECTDIR}/src/positioning/Particle.o \
@@ -64,6 +65,11 @@ LDLIBSOPTIONS=
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/particlesystem: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/particlesystem ${OBJECTFILES} ${LDLIBSOPTIONS}
+
+${OBJECTDIR}/src/display/Window.o: src/display/Window.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/display
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/display/Window.o src/display/Window.cpp
 
 ${OBJECTDIR}/src/graphics/Pixel.o: src/graphics/Pixel.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/graphics

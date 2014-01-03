@@ -4,12 +4,11 @@
 #include <stdint.h>
 #include "../positioning/Particle.h"
 
-using namespace std;
-
 static const uint8_t DEFAULT_RED = 0;
 static const uint8_t DEFAULT_GREEN = 0;
 static const uint8_t DEFAULT_BLUE = 0;
 static const uint8_t DEFAULT_OPACITY = 255;
+static const bool DEFAULT_RENDER_LINE_MODE = false;
 
 class Pixel : public Particle {
 public:
@@ -34,10 +33,13 @@ public:
     uint8_t getGreen();
     uint8_t getBlue();
     uint8_t getOpacity();
+    bool getRenderLineMode();
     void setColor(int red_, int green_, int blue_);
     void setColor(int red_, int green_, int blue_, int opacity_);
+    void setRenderLineMode(bool renderLines_);
 private:
     uint8_t red, green, blue, opacity;
+    bool renderLines;
 };
 
 #endif

@@ -5,6 +5,7 @@ Pixel::Pixel() : Particle() {
     green = DEFAULT_GREEN;
     blue = DEFAULT_BLUE;
     opacity = DEFAULT_OPACITY;
+    renderLines = DEFAULT_RENDER_LINE_MODE;
 }
 
 Pixel::Pixel(Point pos_) : Particle(pos_) {
@@ -12,6 +13,7 @@ Pixel::Pixel(Point pos_) : Particle(pos_) {
     green = DEFAULT_GREEN;
     blue = DEFAULT_BLUE;
     opacity = DEFAULT_OPACITY;
+    renderLines = DEFAULT_RENDER_LINE_MODE;
 }
 
 Pixel::Pixel(Point pos_, Point vel_) : Particle(pos_, vel_) {
@@ -19,6 +21,7 @@ Pixel::Pixel(Point pos_, Point vel_) : Particle(pos_, vel_) {
     green = DEFAULT_GREEN;
     blue = DEFAULT_BLUE;
     opacity = DEFAULT_OPACITY;
+    renderLines = DEFAULT_RENDER_LINE_MODE;
 }
 
 Pixel::Pixel(Point pos_, Point vel_, Point acc_) : Particle(pos_, vel_, acc_) {
@@ -26,6 +29,7 @@ Pixel::Pixel(Point pos_, Point vel_, Point acc_) : Particle(pos_, vel_, acc_) {
     green = DEFAULT_GREEN;
     blue = DEFAULT_BLUE;
     opacity = DEFAULT_OPACITY;
+    renderLines = DEFAULT_RENDER_LINE_MODE;
 }
 
 Pixel::Pixel(Point pos_, Point vel_, Point acc_, Point jer_) : Particle(pos_, vel_, acc_, jer_) {
@@ -33,6 +37,7 @@ Pixel::Pixel(Point pos_, Point vel_, Point acc_, Point jer_) : Particle(pos_, ve
     green = DEFAULT_GREEN;
     blue = DEFAULT_BLUE;
     opacity = DEFAULT_OPACITY;
+    renderLines = DEFAULT_RENDER_LINE_MODE;
 }
 
 Pixel::Pixel(int red_, int green_, int blue_) : Particle() {
@@ -40,6 +45,7 @@ Pixel::Pixel(int red_, int green_, int blue_) : Particle() {
     green = green_;
     blue = blue_;
     opacity = DEFAULT_OPACITY;
+    renderLines = DEFAULT_RENDER_LINE_MODE;
 }
 
 Pixel::Pixel(int red_, int green_, int blue_, int opacity_) : Particle() {
@@ -47,6 +53,7 @@ Pixel::Pixel(int red_, int green_, int blue_, int opacity_) : Particle() {
     green = green_;
     blue = blue_;
     opacity = opacity_;
+    renderLines = DEFAULT_RENDER_LINE_MODE;
 }
 
 Pixel::Pixel(int red_, int green_, int blue_, Point pos_) : Particle(pos_) {
@@ -54,6 +61,7 @@ Pixel::Pixel(int red_, int green_, int blue_, Point pos_) : Particle(pos_) {
     green = green_;
     blue = blue_;
     opacity = DEFAULT_OPACITY;
+    renderLines = DEFAULT_RENDER_LINE_MODE;
 }
 
 Pixel::Pixel(int red_, int green_, int blue_, int opacity_, Point pos_) : Particle(pos_) {
@@ -61,6 +69,7 @@ Pixel::Pixel(int red_, int green_, int blue_, int opacity_, Point pos_) : Partic
     green = green_;
     blue = blue_;
     opacity = opacity_;
+    renderLines = DEFAULT_RENDER_LINE_MODE;
 }
 
 Pixel::Pixel(int red_, int green_, int blue_, Point pos_, Point vel_) : Particle(pos_, vel_) {
@@ -68,6 +77,7 @@ Pixel::Pixel(int red_, int green_, int blue_, Point pos_, Point vel_) : Particle
     green = green_;
     blue = blue_;
     opacity = DEFAULT_OPACITY;
+    renderLines = DEFAULT_RENDER_LINE_MODE;
 }
 
 Pixel::Pixel(int red_, int green_, int blue_, int opacity_, Point pos_, Point vel_) : Particle(pos_, vel_) {
@@ -75,6 +85,7 @@ Pixel::Pixel(int red_, int green_, int blue_, int opacity_, Point pos_, Point ve
     green = green_;
     blue = blue_;
     opacity = opacity_;
+    renderLines = DEFAULT_RENDER_LINE_MODE;
 }
 
 Pixel::Pixel(int red_, int green_, int blue_, Point pos_, Point vel_, Point acc_) : Particle(pos_, vel_, acc_) {
@@ -82,6 +93,7 @@ Pixel::Pixel(int red_, int green_, int blue_, Point pos_, Point vel_, Point acc_
     green = green_;
     blue = blue_;
     opacity = DEFAULT_OPACITY;
+    renderLines = DEFAULT_RENDER_LINE_MODE;
 }
 
 Pixel::Pixel(int red_, int green_, int blue_, int opacity_, Point pos_, Point vel_, Point acc_) : Particle(pos_, vel_, acc_) {
@@ -89,6 +101,7 @@ Pixel::Pixel(int red_, int green_, int blue_, int opacity_, Point pos_, Point ve
     green = green_;
     blue = blue_;
     opacity = opacity_;
+    renderLines = DEFAULT_RENDER_LINE_MODE;
 }
 
 Pixel::Pixel(int red_, int green_, int blue_, Point pos_, Point vel_, Point acc_, Point jer_) : Particle(pos_, vel_, acc_, jer_) {
@@ -96,6 +109,7 @@ Pixel::Pixel(int red_, int green_, int blue_, Point pos_, Point vel_, Point acc_
     green = green_;
     blue = blue_;
     opacity = DEFAULT_OPACITY;
+    renderLines = DEFAULT_RENDER_LINE_MODE;
 }
 
 Pixel::Pixel(int red_, int green_, int blue_, int opacity_, Point pos_, Point vel_, Point acc_, Point jer_) : Particle(pos_, vel_, acc_, jer_) {
@@ -103,6 +117,7 @@ Pixel::Pixel(int red_, int green_, int blue_, int opacity_, Point pos_, Point ve
     green = green_;
     blue = blue_;
     opacity = opacity_;
+    renderLines = DEFAULT_RENDER_LINE_MODE;
 }
 
 Pixel::Pixel(const Pixel& orig) : Particle(orig) {
@@ -110,6 +125,7 @@ Pixel::Pixel(const Pixel& orig) : Particle(orig) {
     green = orig.green;
     blue = orig.blue;
     opacity = orig.opacity;
+    renderLines = orig.renderLines;
 }
 
 Pixel::~Pixel() {
@@ -132,6 +148,10 @@ uint8_t Pixel::getOpacity() {
     return opacity;
 }
 
+bool Pixel::getRenderLineMode() {
+    return renderLines;
+}
+
 void Pixel::setColor(int red_, int green_, int blue_) {
     red = red_;
     green = green_;
@@ -143,5 +163,9 @@ void Pixel::setColor(int red_, int green_, int blue_, int opacity_) {
     green = green_;
     blue = blue_;
     opacity = opacity_;
+}
+
+void Pixel::setRenderLineMode(bool renderLines_) {
+    renderLines = renderLines_;
 }
 
