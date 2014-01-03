@@ -1,31 +1,22 @@
 #include "Particle.h"
 
 Particle::Particle() {
-    position;
-    velocity;
-    acceleration;
-    jerk;
+    
 }
 
 Particle::Particle(Point position_) {
     position = position_;
-    velocity;
-    acceleration;
-    jerk;
 }
 
 Particle::Particle(Point position_, Point velocity_) {
     position = position_;
     velocity = velocity_;
-    acceleration;
-    jerk;
 }
 
 Particle::Particle(Point position_, Point velocity_, Point acceleration_) {
     position = position_;
     velocity = velocity_;
     acceleration = acceleration_;
-    jerk;
 }
 
 Particle::Particle(Point position_, Point velocity_, Point acceleration_, Point jerk_) {

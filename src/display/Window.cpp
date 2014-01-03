@@ -10,6 +10,7 @@ Window::Window() {
 }
 
 Window::~Window() {
+    SDL_FreeCursor(cursor);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
 }
