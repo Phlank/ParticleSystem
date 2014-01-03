@@ -10,11 +10,13 @@ two are the same.  This is to demonstrate how each derivative of position
 affects motion as a whole.  There are also more features of this program, listed 
 below:</p>
 <ul>
+<li>Pressing 'q' will exit the program</li>
 <li>Pressing 'l' will toggle lines being drawn between frames, instead of just 
 singular points.</li>
 <li>Pressing 'c' will toggle clearing the renderer between frames.</li>
 <li>Pressing 'd' will dump the memory used by the particles.  This causes performance
-to increase, but all existing particles will perish.  This will also clear the screen.</li>
+to increase, but all existing particles will perish.  This will also clear the screen.  
+It is HIGHLY RECOMMENDED to enable clearing of the screen before dumping.</li>
 </ul>
 
 <h2>Purpose</h2>
