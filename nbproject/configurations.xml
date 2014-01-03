@@ -37,6 +37,7 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
+    <itemPath>README.md</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -55,6 +56,8 @@
           <commandLine>-lSDL2</commandLine>
         </linkerTool>
       </compileType>
+      <item path="README.md" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/display/Window.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/display/Window.h" ex="false" tool="3" flavor2="0">
@@ -94,6 +97,8 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="README.md" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/display/Window.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/display/Window.h" ex="false" tool="3" flavor2="0">
