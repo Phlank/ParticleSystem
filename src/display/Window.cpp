@@ -50,7 +50,6 @@ void Window::clear() {
 }
 
 void Window::drawPixels() {
-    int i;
     double oldX, oldY;
     std::vector<Pixel>::iterator iter = pixels.begin();
     while (iter != pixels.end()) {

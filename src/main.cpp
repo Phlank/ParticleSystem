@@ -14,7 +14,7 @@ int main(int argc, char** argv) {
     Window window;
     bool done = false;
     bool mouseDown = false;
-    bool renderWithLines = false, clear = true;
+    bool renderWithLines = false;
     int mouseX, mouseY;
     
     while (!done) {
