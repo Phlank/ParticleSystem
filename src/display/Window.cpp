@@ -25,9 +25,14 @@ void Window::draw() {
 }
 
 void Window::dump() {
+    bool temp = clearing;
+    clearing = true;
+    draw();
     while (pixels.begin() != pixels.end()) {
         pixels.erase(pixels.begin());
     }
+    draw();
+    clearing = temp;
 }
 
 bool Window::getClearing() {
