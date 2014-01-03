@@ -43,12 +43,13 @@
   <confs>
     <conf name="Debug" type="1">
       <toolsSet>
-        <compilerSet>Clang|GNU</compilerSet>
+        <compilerSet>default</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
+          <commandlineTool>clang++</commandlineTool>
           <commandLine>$(sdl2-config --cflags --libs) -O3</commandLine>
           <warningLevel>2</warningLevel>
         </ccTool>
