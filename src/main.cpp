@@ -133,11 +133,9 @@ int main(int argc, char** argv) {
                 pixel2.setRenderLineMode(true);
                 pixel3.setRenderLineMode(true);
             }
-            pixel1.setLife(std::rand()%128);
-            pixel2.setLife(std::rand()%128);
-            pixel3.setLife(std::rand()%128);
             window.addPixel(pixel1); window.addPixel(pixel2); window.addPixel(pixel3);
         }
+        SDL_Delay(5);
         window.draw();
     }
     

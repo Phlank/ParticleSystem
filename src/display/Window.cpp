@@ -1,7 +1,7 @@
 #include "Window.h"
 
 Window::Window() {
-    window = SDL_CreateWindow(DEFAULT_NAME, DEFAULT_WINDOW_X, DEFAULT_WINDOW_Y, 640, 480, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow(DEFAULT_NAME, DEFAULT_WINDOW_X, DEFAULT_WINDOW_Y, 640, 480, SDL_WINDOW_FULLSCREEN_DESKTOP);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);
     SDL_GetWindowSize(window, &width, &height);
@@ -62,8 +62,7 @@ void Window::drawPixels() {
         Pixel* current = iter.base();                           //Makes reference to base
         Point oldPos = current->getPosition();                  //Initial position
         if (autoDelete) {
-            if (!current->runFrame()) {
-                current->~Pixel();
+            if (!current->runFrame() || oldPos.getX() < -DEFAULT_PIXEL_PADDING || oldPos.getX() > width+DEFAULT_PIXEL_PADDING || oldPos.getY() < -DEFAULT_PIXEL_PADDING || oldPos.getY() > height+DEFAULT_PIXEL_PADDING) {
                 iter = pixels->erase(iter);
             }
             else {

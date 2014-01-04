@@ -6,7 +6,7 @@
 
 #include "Point.h"
 
-static const int DEFAULT_LIFE = 128;
+static const int DEFAULT_LIFE = 64;
 
 class Particle {
 public:
