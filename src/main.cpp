@@ -9,6 +9,8 @@ using namespace std;
 
 int main(int argc, char** argv) {
     
+    enum {RAINBOW, GRAYSCALE, REDSCALE, GREENSCALE, BLUESCALE};
+    
     SDL_Init(SDL_INIT_VIDEO);
     SDL_Event event;
     Window window;
@@ -16,7 +18,8 @@ int main(int argc, char** argv) {
     bool mouseDown = false;
     bool renderWithLines = false;
     int mouseX = 0, mouseY = 0;
-    
+    int colormode = RAINBOW;
+      
     while (!done) {
         SDL_PollEvent(&event);
         switch (event.type) {
@@ -24,21 +27,46 @@ int main(int argc, char** argv) {
                 switch (event.key.keysym.sym) {
                     case SDLK_q:
                         done = true;
+                        std::cout << "Exiting\n";
                         break;
                     case SDLK_l:
                         if (renderWithLines) renderWithLines = false;
                         else renderWithLines = true;
+                        std::cout << "Line rendering: " << renderWithLines << "\n";
                         break;
                     case SDLK_c:
                         if (window.getClearing()) window.setClearing(false);
                         else window.setClearing(true);
+                        std::cout << "Window clearing: " << window.getClearing() << "\n";
                         break;
                     case SDLK_d:
                         window.dump();
+                        std::cout << "Particles dumped\n";
                         break;
                     case SDLK_k:
                         if (window.getAutoDelete()) window.setAutoDelete(false);
                         else window.setAutoDelete(true);
+                        std::cout << "Auto deletion: " << window.getAutoDelete() << "\n";
+                        break;
+                    case SDLK_0:
+                        colormode = RAINBOW;
+                        std::cout << "Colormode: rainbow\n";
+                        break;
+                    case SDLK_1:
+                        colormode = GRAYSCALE;
+                        std::cout << "Colormode: grayscale\n";
+                        break;
+                    case SDLK_2:
+                        colormode = REDSCALE;
+                        std::cout << "Colormode: redscale\n";
+                        break;
+                    case SDLK_3:
+                        colormode = GREENSCALE;
+                        std::cout << "Colormode: greenscale\n";
+                        break;
+                    case SDLK_4:
+                        colormode = BLUESCALE;
+                        std::cout << "Colormode: bluescale\n";
                         break;
                     default:
                         break;
@@ -64,18 +92,51 @@ int main(int argc, char** argv) {
             Point vel((double)std::rand()/RAND_MAX-0.5, (double)std::rand()/RAND_MAX-0.5);
             Point acc((double)std::rand()/RAND_MAX-0.5, (double)std::rand()/RAND_MAX-0.5);
             Point jer((double)std::rand()/RAND_MAX-0.5, (double)std::rand()/RAND_MAX-0.5);
-            Pixel pixel2(std::rand()%256, std::rand()%256, std::rand()%256, pos, vel);
-            Pixel pixel3(std::rand()%256, std::rand()%256, std::rand()%256, pos, vel, acc);
-            Pixel pixel4(std::rand()%256, std::rand()%256, std::rand()%256, pos, vel, acc, jer);
+            Pixel pixel1(pos, vel);
+            Pixel pixel2(pos, vel, acc);
+            Pixel pixel3(pos, vel, acc, jer);
+            int temp1 = std::rand()%256;
+            int temp2 = std::rand()%256;
+            int temp3 = std::rand()%256;
+            /* Constructs pixels based on the colormode. */
+            switch (colormode) {
+                case RAINBOW:
+                    pixel1.setColor(std::rand()%256, std::rand()%256, std::rand()%256);
+                    pixel2.setColor(std::rand()%256, std::rand()%256, std::rand()%256);
+                    pixel3.setColor(std::rand()%256, std::rand()%256, std::rand()%256);
+                    break;
+                case GRAYSCALE:
+                    pixel1.setColor(temp1, temp1, temp1);
+                    pixel2.setColor(temp2, temp2, temp2);
+                    pixel3.setColor(temp3, temp3, temp3);
+                    break;
+                case REDSCALE:
+                    pixel1.setColor(std::rand()%256, 0, 0);
+                    pixel2.setColor(std::rand()%256, 0, 0);
+                    pixel3.setColor(std::rand()%256, 0, 0);
+                    break;
+                case GREENSCALE:
+                    pixel1.setColor(0, std::rand()%256, 0);
+                    pixel2.setColor(0, std::rand()%256, 0);
+                    pixel3.setColor(0, std::rand()%256, 0);
+                    break;
+                case BLUESCALE:
+                    pixel1.setColor(0, 0, std::rand()%256);
+                    pixel2.setColor(0, 0, std::rand()%256);
+                    pixel3.setColor(0, 0, std::rand()%256);
+                    break;
+                default:
+                    break;
+            }
             if (renderWithLines) {
+                pixel1.setRenderLineMode(true);
                 pixel2.setRenderLineMode(true);
                 pixel3.setRenderLineMode(true);
-                pixel4.setRenderLineMode(true);
             }
+            pixel1.setLife(std::rand()%128);
             pixel2.setLife(std::rand()%128);
             pixel3.setLife(std::rand()%128);
-            pixel4.setLife(std::rand()%128);
-            window.addPixel(pixel2); window.addPixel(pixel3); window.addPixel(pixel4);
+            window.addPixel(pixel1); window.addPixel(pixel2); window.addPixel(pixel3);
         }
         window.draw();
     }

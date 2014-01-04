@@ -11,14 +11,14 @@ Window::Window() {
 }
 
 Window::~Window() {
-    delete(pixels);
     pixels = NULL;
-    SDL_FreeCursor(cursor);
+    delete(pixels);
     cursor = NULL;
-    SDL_DestroyRenderer(renderer);
+    SDL_FreeCursor(cursor);
     renderer = NULL;
-    SDL_DestroyWindow(window);
+    SDL_DestroyRenderer(renderer);
     window = NULL;
+    SDL_DestroyWindow(window);
 }
 
 void Window::addPixel(Pixel pixel) {
