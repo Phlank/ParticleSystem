@@ -67,6 +67,9 @@ int main(int argc, char** argv) {
                 pixel3.setRenderLineMode(true);
                 pixel4.setRenderLineMode(true);
             }
+            pixel2.setLife(std::rand()%128);
+            pixel3.setLife(std::rand()%128);
+            pixel4.setLife(std::rand()%128);
             window.addPixel(pixel2); window.addPixel(pixel3); window.addPixel(pixel4);
         }
         window.draw();

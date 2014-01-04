@@ -6,6 +6,8 @@
 
 #include "Point.h"
 
+static const int DEFAULT_LIFE = 128;
+
 class Particle {
 public:
     /// Constructs a new Particle with default values.
@@ -22,14 +24,16 @@ public:
     Particle(const Particle& orig);
     /// Class destructor.
     virtual ~Particle();
-    /// Returns the position.
+    /// \return the position.
     Point getPosition();
-    /// Returns the velocity.
+    /// \return the velocity.
     Point getVelocity();
-    /// Returns the acceleration.
+    /// \return the acceleration.
     Point getAcceleration();
-    /// Returns the jerk.
+    /// \return the jerk.
     Point getJerk();
+    /// \return the remaining life of the particle
+    int getLife();
     /// Sets the position.
     void setPosition(Point position_);
     /// Sets the velocity.
@@ -38,10 +42,13 @@ public:
     void setAcceleration(Point acceleration_);
     /// Sets the jerk.
     void setJerk(Point jerk_);
+    /// Sets the life remaining
+    void setLife(int life_);
     /// Runs through a frame of activity. The position will change based on the derivatives given.
-    void runFrame();
+    bool runFrame();
 private:
     Point position, velocity, acceleration, jerk;
+    int life;
 };
 
 #endif

@@ -3,11 +3,12 @@
 
 #include <SDL2/SDL.h>
 #include <vector>
+#include <iostream>
 #include "../graphics/Pixel.h"
 
 static const char DEFAULT_NAME[] = "Particle System Test Environment";
-static const int DEFAULT_WINDOW_X = SDL_WINDOWPOS_UNDEFINED;
-static const int DEFAULT_WINDOW_Y = SDL_WINDOWPOS_UNDEFINED;
+static const int DEFAULT_WINDOW_X = 0;
+static const int DEFAULT_WINDOW_Y = 0;
 static const int DEFAULT_WINDOW_W = 0;
 static const int DEFAULT_WINDOW_H = 0;
 static const int DEFAULT_WINDOW_FLAGS = SDL_WINDOW_FULLSCREEN_DESKTOP;
@@ -37,7 +38,7 @@ private:
     SDL_Window* window;
     SDL_Renderer* renderer;
     SDL_Cursor* cursor;
-    std::vector<Pixel> pixels;
+    std::vector<Pixel>* pixels;
     bool clearing;
 };
 
