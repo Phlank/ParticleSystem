@@ -8,7 +8,6 @@ static const uint8_t DEFAULT_RED = 0;
 static const uint8_t DEFAULT_GREEN = 0;
 static const uint8_t DEFAULT_BLUE = 0;
 static const uint8_t DEFAULT_OPACITY = 255;
-static const bool DEFAULT_RENDER_LINE_MODE = false;
 
 class Pixel : public Particle {
 public:
@@ -54,16 +53,10 @@ public:
     uint8_t getBlue();
     /// \return the opacity value of this pixel
     uint8_t getOpacity();
-    /// \return the rendering mode of this pixel
-    /// false - renders points; true - renders line segments
-    bool getRenderLineMode();
     /// Sets the RGB values of this pixel.
     void setColor(int red_, int green_, int blue_);
     /// Sets the RGB values and opacity of this pixel.
     void setColor(int red_, int green_, int blue_, int opacity_);
-    /// Sets the rendering mode of this pixel.
-    /// false - renders points; true - renders line segments
-    void setRenderLineMode(bool renderLines_);
 private:
     uint8_t red, green, blue, opacity;
     bool renderLines;

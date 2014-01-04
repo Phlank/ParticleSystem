@@ -30,8 +30,8 @@ int main(int argc, char** argv) {
                         std::cout << "Exiting\n";
                         break;
                     case SDLK_l:
-                        if (renderWithLines) renderWithLines = false;
-                        else renderWithLines = true;
+                        if (window.getRenderLine()) window.setRenderLine(false);
+                        else window.setRenderLine(true);
                         std::cout << "Line rendering: " << renderWithLines << "\n";
                         break;
                     case SDLK_c:
@@ -47,6 +47,9 @@ int main(int argc, char** argv) {
                         if (window.getAutoDelete()) window.setAutoDelete(false);
                         else window.setAutoDelete(true);
                         std::cout << "Auto deletion: " << window.getAutoDelete() << "\n";
+                        break;
+                    case SDLK_f:
+                        window.centerMouse();
                         break;
                     case SDLK_0:
                         colormode = RAINBOW;
@@ -128,12 +131,9 @@ int main(int argc, char** argv) {
                 default:
                     break;
             }
-            if (renderWithLines) {
-                pixel1.setRenderLineMode(true);
-                pixel2.setRenderLineMode(true);
-                pixel3.setRenderLineMode(true);
-            }
-            window.addPixel(pixel1); window.addPixel(pixel2); window.addPixel(pixel3);
+            window.addPixel(pixel1);
+            window.addPixel(pixel2);
+            window.addPixel(pixel3);
         }
         SDL_Delay(5);
         window.draw();

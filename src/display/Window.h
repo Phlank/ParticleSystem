@@ -12,9 +12,10 @@ static const int DEFAULT_WINDOW_Y = 0;
 static const int DEFAULT_WINDOW_W = 0;
 static const int DEFAULT_WINDOW_H = 0;
 static const int DEFAULT_WINDOW_FLAGS = SDL_WINDOW_FULLSCREEN_DESKTOP;
-static const int DEFAULT_PIXEL_PADDING = 100; //How far out of the display a pixel can get before it is destroyed
-static const bool DEFAULT_PIXEL_LINE_MODE = false;
+static const int DEFAULT_PIXEL_PADDING = 0; //How far out of the display a pixel can get before it is destroyed
 static const bool DEFAULT_AUTO_DELETE = false;
+static const bool DEFAULT_RENDER_LINE = false;
+static const bool DEFAULT_CLEARING = true;
 
 class Window {
 public:
@@ -36,6 +37,12 @@ public:
     bool getAutoDelete();
     /// Sets whether or not pixels are automatically destroyed after a given interval.
     void setAutoDelete(bool autoDelete_);
+    /// \return whether or not pixels are rendered as line segments.
+    bool getRenderLine();
+    /// Sets whether or not pixels are rendered as line segments.
+    void setRenderLine(bool renderLine_);
+    /// Centers the mouse in the window
+    void centerMouse();
 private:
     void clear();
     void drawPixels();
@@ -44,7 +51,7 @@ private:
     SDL_Renderer* renderer;
     SDL_Cursor* cursor;
     std::vector<Pixel>* pixels;
-    bool clearing, autoDelete;
+    bool clearing, autoDelete, renderLine;
 };
 
 #endif

@@ -18,6 +18,7 @@ singular points. (Default: disabled)</li>
 to increase, but all existing particles will perish.  The screen will not be cleared.</li>
 <li>Pressing 'k' will toggle automatic particle destruction.  If enabled, particles
 will die after a set amount of frames. (Default: enabled)</li>
+<li>Pressing 'f' will center the cursor on the screen.</li>
 <li>Pressing certain numbers will change the types of colors that particles will appear as.
 <ul>
 <li>0 - Rainbow (Default)</li>

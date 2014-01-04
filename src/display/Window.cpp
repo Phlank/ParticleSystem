@@ -6,8 +6,9 @@ Window::Window() {
     cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);
     SDL_GetWindowSize(window, &width, &height);
     SDL_WarpMouseInWindow(window, width/2, height/2);
-    clearing = true;
+    clearing = DEFAULT_CLEARING;
     pixels = new std::vector<Pixel>();
+    renderLine = DEFAULT_RENDER_LINE;
 }
 
 Window::~Window() {
@@ -51,6 +52,18 @@ void Window::setAutoDelete(bool autoDelete_) {
     autoDelete = autoDelete_;
 }
 
+bool Window::getRenderLine() {
+    return renderLine;
+}
+
+void Window::setRenderLine(bool renderLine_) {
+    renderLine = renderLine_;
+}
+
+void Window::centerMouse() {
+    SDL_WarpMouseInWindow(window, width/2, height/2);
+}
+
 void Window::clear() {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
@@ -68,7 +81,7 @@ void Window::drawPixels() {
             else {
                 Point newPos = current->getPosition();
                 SDL_SetRenderDrawColor(renderer, current->getRed(), current->getGreen(), current->getBlue(), current->getOpacity());
-                if (current->getRenderLineMode())
+                if (renderLine)
                     SDL_RenderDrawLine(renderer, oldPos.getX(), oldPos.getY(), newPos.getX(), newPos.getY());
                 else
                     SDL_RenderDrawPoint(renderer, newPos.getX(), newPos.getY());
@@ -79,7 +92,7 @@ void Window::drawPixels() {
             current->runFrame();
             Point newPos = current->getPosition();
             SDL_SetRenderDrawColor(renderer, current->getRed(), current->getGreen(), current->getBlue(), current->getOpacity());
-            if (current->getRenderLineMode())
+            if (renderLine)
                 SDL_RenderDrawLine(renderer, oldPos.getX(), oldPos.getY(), newPos.getX(), newPos.getY());
             else
                 SDL_RenderDrawPoint(renderer, newPos.getX(), newPos.getY());
