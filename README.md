@@ -12,13 +12,12 @@ below:</p>
 <ul>
 <li>Pressing 'q' will exit the program</li>
 <li>Pressing 'l' will toggle lines being drawn between frames, instead of just 
-singular points.</li>
-<li>Pressing 'c' will toggle clearing the renderer between frames.</li>
+singular points. (Default: disabled)</li>
+<li>Pressing 'c' will toggle clearing the renderer between frames. (Default: disabled)</li>
 <li>Pressing 'd' will dump the memory used by the particles.  This causes performance
-to increase, but all existing particles will perish.  This will also clear the screen.  
-It is HIGHLY RECOMMENDED to enable clearing of the screen before dumping.</li>
+to increase, but all existing particles will perish.  The screen will not be cleared.</li>
 <li>Pressing 'k' will toggle automatic particle destruction.  If enabled, particles
-will die after a set amount of frames.</li>
+will die after a set amount of frames. (Default: enabled)</li>
 <li>Pressing certain numbers will change the types of colors that particles will appear as.
 <ul>
 <li>0 - Rainbow (Default)</li>
