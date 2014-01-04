@@ -19,6 +19,14 @@ to increase, but all existing particles will perish.  This will also clear the s
 It is HIGHLY RECOMMENDED to enable clearing of the screen before dumping.</li>
 <li>Pressing 'k' will toggle automatic particle destruction.  If enabled, particles
 will die after a set amount of frames.</li>
+<li>Pressing certain numbers will change the types of colors that particles will appear as.
+<ul>
+<li>0 - Rainbow (Default)</li>
+<li>1 - Grayscale</li>
+<li>2 - Redscale</li>
+<li>3 - Greenscale</li>
+<li>4 - Bluescale</li>
+</ul></li>
 </ul>
 
 <h2>Purpose</h2>
