@@ -13,6 +13,8 @@ Window::~Window() {
     SDL_FreeCursor(cursor);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+    dump();
+    pixels.~vector();
 }
 
 void Window::addPixel(Pixel pixel) {
@@ -26,14 +28,9 @@ void Window::draw() {
 }
 
 void Window::dump() {
-    bool temp = clearing;
-    clearing = true;
-    draw();
     while (pixels.begin() != pixels.end()) {
         pixels.erase(pixels.begin());
     }
-    draw();
-    clearing = temp;
 }
 
 bool Window::getClearing() {
@@ -56,17 +53,17 @@ void Window::drawPixels() {
         oldX = iter.base()->getPosition().getX();
         oldY = iter.base()->getPosition().getY();
         iter.base()->runFrame();
-//        if (iter.base()->getPosition().getX() < -100 || iter.base()->getPosition().getX() > width+100 || iter.base()->getPosition().getY() < -100 || iter.base()->getPosition().getY() > height+100) {
-//            iter = pixels.erase(iter);
-//        }
-//        else {
+        if (iter.base()->getPosition().getX() < -DEFAULT_PIXEL_PADDING || iter.base()->getPosition().getX() > width+DEFAULT_PIXEL_PADDING || iter.base()->getPosition().getY() < -DEFAULT_PIXEL_PADDING || iter.base()->getPosition().getY() > height+DEFAULT_PIXEL_PADDING) {
+            iter = pixels.erase(iter);
+        }
+        else {
             SDL_SetRenderDrawColor(renderer, iter.base()->getRed(), iter.base()->getGreen(), iter.base()->getBlue(), iter.base()->getOpacity());
             if (iter.base()->getRenderLineMode())
                 SDL_RenderDrawLine(renderer, oldX, oldY, iter.base()->getPosition().getX(), iter.base()->getPosition().getY());
             else
                 SDL_RenderDrawPoint(renderer, iter.base()->getPosition().getX(), iter.base()->getPosition().getY());
             iter++;
-//        }
+        }
     }
 }
 

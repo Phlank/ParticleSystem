@@ -49,7 +49,7 @@
       </toolsSet>
       <compileType>
         <ccTool>
-          <commandlineTool>clang++</commandlineTool>
+          <commandlineTool>g++</commandlineTool>
           <commandLine>$(sdl2-config --cflags --libs) -O3</commandLine>
           <warningLevel>2</warningLevel>
         </ccTool>

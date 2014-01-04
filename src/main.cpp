@@ -15,7 +15,7 @@ int main(int argc, char** argv) {
     bool done = false;
     bool mouseDown = false;
     bool renderWithLines = false;
-    int mouseX, mouseY;
+    int mouseX = 0, mouseY = 0;
     
     while (!done) {
         SDL_PollEvent(&event);
