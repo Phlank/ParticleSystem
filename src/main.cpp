@@ -51,6 +51,16 @@ int main(int argc, char** argv) {
                     case SDLK_f:
                         window.centerMouse();
                         break;
+                    case SDLK_a:
+                        if (window.getAntialias()) window.setAntialias(false);
+                        else window.setAntialias(true);
+                        std::cout << "Antialiasing: " << window.getAntialias() << "\n";
+                        break;
+                    case SDLK_b:
+                        if (window.getBlendMode()) window.setBlendMode(false);
+                        else window.setBlendMode(true);
+                        std::cout << "Blend mode: " << window.getBlendMode() << "\n";
+                        break;
                     case SDLK_0:
                         colormode = RAINBOW;
                         std::cout << "Colormode: rainbow\n";

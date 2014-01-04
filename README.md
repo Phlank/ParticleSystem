@@ -1,5 +1,6 @@
 <h1>Particle System demo</h1>
 <p>Colin Ledbetter</p>
+<p><img src="Screenshot.png"/></p>
 <h2>Instructions</h2>
 <p>Click with the mouse to generate particles of random color.  Each frame with 
 the mouse down will create three different particles with random properties.  
@@ -13,12 +14,14 @@ below:</p>
 <li>Pressing 'q' will exit the program</li>
 <li>Pressing 'l' will toggle lines being drawn between frames, instead of just 
 singular points. (Default: disabled)</li>
+<li>When drawing lines is enabled, pressing 'a' will toggle drawing antialiased lines. (Default: disabled)</li>
 <li>Pressing 'c' will toggle clearing the renderer between frames. (Default: disabled)</li>
 <li>Pressing 'd' will dump the memory used by the particles.  This causes performance
 to increase, but all existing particles will perish.  The screen will not be cleared.</li>
 <li>Pressing 'k' will toggle automatic particle destruction.  If enabled, particles
 will die after a set amount of frames. (Default: enabled)</li>
 <li>Pressing 'f' will center the cursor on the screen.</li>
+<li>Pressing 'b' will toggle the blend mode between blending and adding. (Default: blending)</li>
 <li>Pressing certain numbers will change the types of colors that particles will appear as.
 <ul>
 <li>0 - Rainbow (Default)</li>

@@ -16,6 +16,8 @@ static const int DEFAULT_PIXEL_PADDING = 0; //How far out of the display a pixel
 static const bool DEFAULT_AUTO_DELETE = false;
 static const bool DEFAULT_RENDER_LINE = false;
 static const bool DEFAULT_CLEARING = true;
+static const bool DEFAULT_ANTIALIAS = false;
+static const bool DEFAULT_BLENDMODE = false;
 
 class Window {
 public:
@@ -41,17 +43,26 @@ public:
     bool getRenderLine();
     /// Sets whether or not pixels are rendered as line segments.
     void setRenderLine(bool renderLine_);
+    /// \return the antialias setting
+    bool getAntialias();
+    /// Sets the antialias setting
+    void setAntialias(bool antialias_);
+    /// \return the blendmode
+    bool getBlendMode();
+    /// Sets the blend mode
+    void setBlendMode(bool blendmode_);
     /// Centers the mouse in the window
     void centerMouse();
 private:
     void clear();
     void drawPixels();
+    void drawAALine(double x1, double y1, Pixel* target);
     int width, height;
     SDL_Window* window;
     SDL_Renderer* renderer;
     SDL_Cursor* cursor;
     std::vector<Pixel>* pixels;
-    bool clearing, autoDelete, renderLine;
+    bool clearing, autoDelete, renderLine, antialias, blendmode;
 };
 
 #endif
