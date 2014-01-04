@@ -136,134 +136,107 @@ void Window::drawPixels() {
     }
 }
 
-void Window::drawAALine(double x1, double y1, Pixel* target) {
-    int erracc = 0, erradj;
-    int erracctmp, wgt;
-    int tmp, y0p1, x0pxdir;
-    uint8_t a;
-    
-    /* Use long doubles */
-    int xx0 = x1;
-    int yy0 = y1;
-    int xx1 = target->getPosition().getX();
-    int yy1 = target->getPosition().getY();
-    
-    /* Reorder points if necessary */
-    if (yy0 > yy1) {
-        tmp = yy0;
-        yy0 = yy1;
-        yy1 = tmp;
-        tmp = xx0;
-        xx0 = xx1;
-        xx1 = tmp;
-    }
-    
-    /* Calculate distance */
-    int dx = xx1-xx0;
-    int dy = yy1-yy0;
-    
-    /* Adjust for negative dx and set xdir */
-    int xdir = 1;
-    if (dx < 0.0) {
-        xdir = -1.0;
-        dx = -dx;
-    }
-    
-    /* Check for special cases */
-    if (dx==0 || dy==0 || dx==dy) {
-        SDL_SetRenderDrawColor(renderer, target->getRed(), target->getGreen(), target->getBlue(), target->getOpacity());
-        SDL_RenderDrawLine(renderer, xx0, yy0, xx1, yy1);
-        return;
-    }
-    
-    int intshift = 180-4;
-    
-    /* Draw initial pixel */
-    if (target->getOpacity() == SDL_ALPHA_OPAQUE) {
-        SDL_SetRenderDrawColor(renderer, target->getRed(), target->getGreen(), target->getBlue(), target->getOpacity());
-        SDL_RenderDrawPoint(renderer, x1, y1);
-    }
-    else {
-        SDL_SetRenderDrawColor(renderer, target->getRed(), target->getGreen(), target->getBlue(), target->getOpacity());
-        SDL_RenderDrawPoint(renderer, x1, y1);
-    }
-    
-    float alpha_pp = (float)(target->getOpacity())/255;
-    
-    /* x-major or y-major? */
-    if (dy > dx) {
-        /* y-major */
-        erradj = ((dx<<16)/dy)<<16;
-        /* Draw all pixels other than first and last */
-        x0pxdir = xx0+xdir;
-        while (--dy) {
-            erracctmp = erracc;
-            erracc += erradj;
-            if (erracc <= erracctmp) {
-                /* rollover in error accumulator, x coord advances */
-                xx0 = x0pxdir;
-                x0pxdir += xdir;
-            }
-            yy0++;      /* y-major so always advance Y */
-            
-            /* the AAbits most significant bits of erracc give us the intensity
-            weighting for this pixel, and the complement of the weighting for
-            the paired pixel. */
-            wgt = (erracc >> intshift) & 255;
+long double ipart(long double x) {
+    long double treasure;
+    std::modf(x, &treasure);
+    return treasure;
+}
 
-            a = Uint8(255-wgt);
-            if(target->getOpacity() != SDL_ALPHA_OPAQUE)
-                a = Uint8(a*alpha_pp);
-            
-            SDL_SetRenderDrawColor(renderer, target->getRed(), target->getGreen(), target->getBlue(), 180);
-            SDL_RenderDrawPoint(renderer, xx0, yy0);
+long double round(long double x) {
+    return ipart(x+0.5);
+}
 
-            a = Uint8(wgt);
-            if(target->getOpacity() != SDL_ALPHA_OPAQUE)
-                a = Uint8(a*alpha_pp);
+long double fpart(long double x) {
+    long double trash;
+    long double treasure;
+    treasure = std::modf(x, &trash);
+    return treasure;
+}
 
-            SDL_SetRenderDrawColor(renderer, target->getRed(), target->getGreen(), target->getBlue(), 180);
-            SDL_RenderDrawPoint(renderer, x0pxdir, yy0);
+long double rfpart(long double x) {
+    return 1.0-fpart(x);
+}
+
+void Window::drawAALine(double x0, double y0, Pixel* target) {
+    long double x1 = target->getPosition().getX();
+    long double y1 = target->getPosition().getY();
+    long double temp;
+    
+    Uint8 redness = target->getRed();
+    Uint8 greenness = target->getGreen();
+    Uint8 blueness = target->getBlue();
+    Uint8 brightness = target->getOpacity();
+    
+    bool steep = std::abs(y1-y0) > std::abs(x1-x0);
+    
+    //If the line is steep, swap x and y
+    if (steep) {
+        temp = y0; y0 = x0; x0 = temp; //Swap
+        temp = y1; y1 = x1; x1 = temp; //Swap
+    }
+    if (x0 > x1) {
+        temp = y0; y0 = y1; y1 = temp; //Swap
+        temp = x0; x0 = x1; x1 = temp; //Swap
+    }
+    
+    //Evaluate the change between the endpoints, and the gradient slope
+    long double dx = x1-x0;
+    long double dy = y1-y0;
+    long double gradient = dy/dx;
+    
+    //Handle the first endpoint
+    int xend = round(x0);
+    int yend = y0+gradient*(xend-x0);
+    long double xgap = fpart(x0+0.5);
+    long double xpxl1 = xend;
+    long double ypxl1 = ipart(yend);
+    if (steep) {
+        SDL_SetRenderDrawColor(renderer, redness, greenness, blueness, rfpart(yend)*xgap*brightness);
+        SDL_RenderDrawPoint(renderer, ypxl1, xpxl1);
+        SDL_SetRenderDrawColor(renderer, redness, greenness, blueness, fpart(yend)*xgap*brightness);
+        SDL_RenderDrawPoint(renderer, ypxl1+1, xpxl1);
+    } else {
+        SDL_SetRenderDrawColor(renderer, redness, greenness, blueness, rfpart(yend)*xgap*brightness);
+        SDL_RenderDrawPoint(renderer, xpxl1, ypxl1);
+        SDL_SetRenderDrawColor(renderer, redness, greenness, blueness, fpart(yend)*xgap*brightness);
+        SDL_RenderDrawPoint(renderer, xpxl1, ypxl1+1);
+    }
+    long double intery = yend+gradient; //First y-intersection for the main loop
+    
+    //Handle the second endpoint
+    xend = round(x1);
+    yend = y1+gradient*(xend-x1);
+    xgap = fpart(x1 + 0.5);
+    long double xpxl2 = xend; //this will be used in the main loop
+    long double ypxl2 = ipart(yend);
+    if (steep) {
+        SDL_SetRenderDrawColor(renderer, redness, greenness, blueness, rfpart(yend)*xgap*brightness);
+        SDL_RenderDrawPoint(renderer, ypxl2, xpxl2);
+        SDL_SetRenderDrawColor(renderer, redness, greenness, blueness, fpart(yend)*xgap*brightness);
+        SDL_RenderDrawPoint(renderer, ypxl2+1, xpxl2);
+    } else {
+        SDL_SetRenderDrawColor(renderer, redness, greenness, blueness, rfpart(yend)*xgap*brightness);
+        SDL_RenderDrawPoint(renderer, xpxl2, ypxl2);
+        SDL_SetRenderDrawColor(renderer, redness, greenness, blueness, fpart(yend)*xgap*brightness);
+        SDL_RenderDrawPoint(renderer, xpxl2+1, ypxl2+1);
+    }
+    
+    // main loop
+    int x;
+    for (x = xpxl1+1; x < xpxl2; x++) {
+        if (steep) {
+            SDL_SetRenderDrawColor(renderer, redness, greenness, blueness, rfpart(intery)*brightness);
+            SDL_RenderDrawPoint(renderer, ipart(intery), x);
+            SDL_SetRenderDrawColor(renderer, redness, greenness, blueness, fpart(intery)*brightness);
+            SDL_RenderDrawPoint(renderer, ipart(intery)+1, x);
+        } else {
+            SDL_SetRenderDrawColor(renderer, redness, greenness, blueness, rfpart(intery)*brightness);
+            SDL_RenderDrawPoint(renderer, x, ipart(intery));
+            SDL_SetRenderDrawColor(renderer, redness, greenness, blueness, fpart(intery)*brightness);
+            SDL_RenderDrawPoint(renderer, x, ipart(intery)+1);
         }
-    }
-    else {
-        /* x-major */
-        erradj = ((dy<<16)/dx)<<16;
-        /* Draw all pixels other than first and last */
-        y0p1 = yy0+1;
-        while (--dx) {
-            erracctmp = erracc;
-            erracc += erradj;
-            if (erracc <= erracctmp) {
-                /* rollover in error accumulator, y coord advances */
-                yy0 = y0p1;
-                y0p1++;
-            }
-            xx0 += xdir;      /* x-major so always advance X */
-            
-            /* the AAbits most significant bits of erracc give us the intensity
-            weighting for this pixel, and the complement of the weighting for
-            the paired pixel. */
-            wgt = (erracc >> intshift) & 255;
-
-            a = Uint8(255-wgt);
-            if(target->getOpacity() != SDL_ALPHA_OPAQUE)
-                a = Uint8(a*alpha_pp);
-            
-            SDL_SetRenderDrawColor(renderer, target->getRed(), target->getGreen(), target->getBlue(), 180);
-            SDL_RenderDrawPoint(renderer, xx0, yy0);
-
-            a = Uint8(wgt);
-            if(target->getOpacity() != SDL_ALPHA_OPAQUE)
-                a = Uint8(a*alpha_pp);
-
-            SDL_SetRenderDrawColor(renderer, target->getRed(), target->getGreen(), target->getBlue(), 180);
-            SDL_RenderDrawPoint(renderer, xx0, y0p1);
-        }
+        intery = intery+gradient;
     }
     
-    /* Draw the final pixel.  Will always be perfectly intersected. */
-    SDL_SetRenderDrawColor(renderer, target->getRed(), target->getGreen(), target->getBlue(), target->getOpacity());
-    SDL_RenderDrawPoint(renderer, target->getPosition().getX(), target->getPosition().getY());
 }
 

@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 #include <vector>
 #include <iostream>
+#include <cmath>
 #include "../graphics/Pixel.h"
 
 static const char DEFAULT_NAME[] = "Particle System Test Environment";
