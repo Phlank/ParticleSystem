@@ -16,12 +16,19 @@ static const bool DEFAULT_PIXEL_LINE_MODE = false;
 
 class Window {
 public:
+    /// Class constructor.
     Window();
+    /// Class destructor.
     virtual ~Window();
+    /// Adds a pixel to the rendering cycle.
     void addPixel(Pixel pixel);
+    /// Redraws the window.
     void draw();
+    /// Erases all of the particles in the rendering cycle.
     void dump();
+    /// \return whether or not the screen clears before it is drawn
     bool getClearing();
+    /// Sets whether or not the screen clears before it is drawn.
     void setClearing(bool clearing_);
 private:
     void clear();
