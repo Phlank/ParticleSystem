@@ -57,32 +57,33 @@ void Window::clear() {
 }
 
 void Window::drawPixels() {
-    double oldX, oldY;
     std::vector<Pixel>::iterator iter = pixels->begin();
-    while (iter != pixels->end()) {
-        oldX = iter.base()->getPosition().getX();
-        oldY = iter.base()->getPosition().getY();
-        iter.base()->runFrame();
+    while (iter != pixels->end()) {                             //Cycles through the entire pixels vector
+        Pixel* current = iter.base();                           //Makes reference to base
+        Point oldPos = current->getPosition();                  //Initial position
         if (autoDelete) {
-            if (!iter.base()->runFrame()) {
-                iter.base()->~Pixel();
+            if (!current->runFrame()) {
+                current->~Pixel();
                 iter = pixels->erase(iter);
             }
             else {
-                SDL_SetRenderDrawColor(renderer, iter.base()->getRed(), iter.base()->getGreen(), iter.base()->getBlue(), iter.base()->getOpacity());
-                if (iter.base()->getRenderLineMode())
-                    SDL_RenderDrawLine(renderer, oldX, oldY, iter.base()->getPosition().getX(), iter.base()->getPosition().getY());
+                Point newPos = current->getPosition();
+                SDL_SetRenderDrawColor(renderer, current->getRed(), current->getGreen(), current->getBlue(), current->getOpacity());
+                if (current->getRenderLineMode())
+                    SDL_RenderDrawLine(renderer, oldPos.getX(), oldPos.getY(), newPos.getX(), newPos.getY());
                 else
-                    SDL_RenderDrawPoint(renderer, iter.base()->getPosition().getX(), iter.base()->getPosition().getY());
+                    SDL_RenderDrawPoint(renderer, newPos.getX(), newPos.getY());
                 iter++;
             }
         }
         else {
-            SDL_SetRenderDrawColor(renderer, iter.base()->getRed(), iter.base()->getGreen(), iter.base()->getBlue(), iter.base()->getOpacity());
-            if (iter.base()->getRenderLineMode())
-                SDL_RenderDrawLine(renderer, oldX, oldY, iter.base()->getPosition().getX(), iter.base()->getPosition().getY());
+            current->runFrame();
+            Point newPos = current->getPosition();
+            SDL_SetRenderDrawColor(renderer, current->getRed(), current->getGreen(), current->getBlue(), current->getOpacity());
+            if (current->getRenderLineMode())
+                SDL_RenderDrawLine(renderer, oldPos.getX(), oldPos.getY(), newPos.getX(), newPos.getY());
             else
-                SDL_RenderDrawPoint(renderer, iter.base()->getPosition().getX(), iter.base()->getPosition().getY());
+                SDL_RenderDrawPoint(renderer, newPos.getX(), newPos.getY());
             iter++;
         }
     }
