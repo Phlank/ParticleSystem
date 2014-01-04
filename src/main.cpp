@@ -35,6 +35,11 @@ int main(int argc, char** argv) {
                         break;
                     case SDLK_d:
                         window.dump();
+                        break;
+                    case SDLK_k:
+                        if (window.getAutoDelete()) window.setAutoDelete(false);
+                        else window.setAutoDelete(true);
+                        break;
                     default:
                         break;
                 }

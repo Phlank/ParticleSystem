@@ -43,6 +43,14 @@ void Window::setClearing(bool clearing_) {
     clearing = clearing_;
 }
 
+bool Window::getAutoDelete() {
+    return autoDelete;
+}
+
+void Window::setAutoDelete(bool autoDelete_) {
+    autoDelete = autoDelete_;
+}
+
 void Window::clear() {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
@@ -55,18 +63,28 @@ void Window::drawPixels() {
         oldX = iter.base()->getPosition().getX();
         oldY = iter.base()->getPosition().getY();
         iter.base()->runFrame();
-//        if (!iter.base()->runFrame()) {
-//            iter.base()->~Pixel();
-//            iter = pixels->erase(iter);
-//        }
-//        else {
+        if (autoDelete) {
+            if (!iter.base()->runFrame()) {
+                iter.base()->~Pixel();
+                iter = pixels->erase(iter);
+            }
+            else {
+                SDL_SetRenderDrawColor(renderer, iter.base()->getRed(), iter.base()->getGreen(), iter.base()->getBlue(), iter.base()->getOpacity());
+                if (iter.base()->getRenderLineMode())
+                    SDL_RenderDrawLine(renderer, oldX, oldY, iter.base()->getPosition().getX(), iter.base()->getPosition().getY());
+                else
+                    SDL_RenderDrawPoint(renderer, iter.base()->getPosition().getX(), iter.base()->getPosition().getY());
+                iter++;
+            }
+        }
+        else {
             SDL_SetRenderDrawColor(renderer, iter.base()->getRed(), iter.base()->getGreen(), iter.base()->getBlue(), iter.base()->getOpacity());
             if (iter.base()->getRenderLineMode())
                 SDL_RenderDrawLine(renderer, oldX, oldY, iter.base()->getPosition().getX(), iter.base()->getPosition().getY());
             else
                 SDL_RenderDrawPoint(renderer, iter.base()->getPosition().getX(), iter.base()->getPosition().getY());
             iter++;
-//        }
+        }
     }
 }
 

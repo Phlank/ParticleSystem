@@ -17,6 +17,8 @@ singular points.</li>
 <li>Pressing 'd' will dump the memory used by the particles.  This causes performance
 to increase, but all existing particles will perish.  This will also clear the screen.  
 It is HIGHLY RECOMMENDED to enable clearing of the screen before dumping.</li>
+<li>Pressing 'k' will toggle automatic particle destruction.  If enabled, particles
+will die after a set amount of frames.</li>
 </ul>
 
 <h2>Purpose</h2>
