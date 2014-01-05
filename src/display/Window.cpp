@@ -98,7 +98,7 @@ void Window::drawPixels() {
         Pixel* current = iter.base();                           //Makes reference to base
         Point oldPos = current->getPosition();                  //Initial position
         if (autoDelete) {
-            if (!current->runFrame() || oldPos.getX() < -DEFAULT_PIXEL_PADDING || oldPos.getX() > width+DEFAULT_PIXEL_PADDING || oldPos.getY() < -DEFAULT_PIXEL_PADDING || oldPos.getY() > height+DEFAULT_PIXEL_PADDING) {
+            if (!current->runPixelFrame() || oldPos.getX() < -DEFAULT_PIXEL_PADDING || oldPos.getX() > width+DEFAULT_PIXEL_PADDING || oldPos.getY() < -DEFAULT_PIXEL_PADDING || oldPos.getY() > height+DEFAULT_PIXEL_PADDING) {
                 iter = pixels->erase(iter);
             }
             else {
@@ -119,7 +119,7 @@ void Window::drawPixels() {
             }
         }
         else {
-            current->runFrame();
+            current->runPixelFrame();
             Point newPos = current->getPosition();
             SDL_SetRenderDrawColor(renderer, current->getRed(), current->getGreen(), current->getBlue(), current->getOpacity());
             if (renderLine)

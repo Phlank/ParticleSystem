@@ -57,6 +57,8 @@ public:
     void setColor(int red_, int green_, int blue_);
     /// Sets the RGB values and opacity of this pixel.
     void setColor(int red_, int green_, int blue_, int opacity_);
+    /// Runs through a frame of activity
+    bool runPixelFrame();
 private:
     uint8_t red, green, blue, opacity;
     bool renderLines;

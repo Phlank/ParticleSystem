@@ -103,6 +103,9 @@ int main(int argc, char** argv) {
         if (mouseDown) {
             Point pos(mouseX, mouseY);
             Point vel((double)std::rand()/RAND_MAX-0.5, (double)std::rand()/RAND_MAX-0.5);
+//            Point velAlt(vel);
+//            velAlt.setX(velAlt.getX()*20);
+//            velAlt.setY(velAlt.getY()*20);
             Point acc((double)std::rand()/RAND_MAX-0.5, (double)std::rand()/RAND_MAX-0.5);
             Point jer((double)std::rand()/RAND_MAX-0.5, (double)std::rand()/RAND_MAX-0.5);
             Pixel pixel1(pos, vel);

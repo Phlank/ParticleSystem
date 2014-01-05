@@ -145,3 +145,9 @@ void Pixel::setColor(int red_, int green_, int blue_, int opacity_) {
     opacity = opacity_;
 }
 
+bool Pixel::runPixelFrame() {
+    bool output = this->runFrame();
+    setColor(red, green, blue, 255/DEFAULT_LIFE*this->getLife());
+    return output;
+}
+
