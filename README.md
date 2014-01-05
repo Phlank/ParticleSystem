@@ -41,5 +41,8 @@ Particle class, using surfaces or textures instead of individual pixel colors.
 Feel free to use this without any credit to me.</p>
 
 <h2>Plans for future development</h2>
-<p>I plan on implementing sprites and images, and I will continue to use SDL2 in 
-doing so.</p>
+<ul>
+<li>More color options</li>
+<li>Ability to change scaling for velocity, acceleration, and jerk</li>
+<li>Android app?</li>
+</ul>
