@@ -1,6 +1,6 @@
 <h1>Particle System demo</h1>
 <p>Colin Ledbetter</p>
-<p><img src="Screenshot.png"/></p>
+<p><img src="http://i.imgur.com/quLzfvo.jpg"/></p>
 <h2>Instructions</h2>
 <p>Click with the mouse to generate particles of random color.  Each frame with 
 the mouse down will create three different particles with random properties.  
