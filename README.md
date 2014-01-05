@@ -11,17 +11,18 @@ two are the same.  This is to demonstrate how each derivative of position
 affects motion as a whole.  There are also more features of this program, listed 
 below:</p>
 <ul>
-<li>Pressing 'q' will exit the program</li>
-<li>Pressing 'l' will toggle lines being drawn between frames, instead of just 
+<li>Q - exit the program</li>
+<li>L - toggle lines being drawn between frames, instead of just 
 singular points. (Default: disabled)</li>
-<li>When drawing lines is enabled, pressing 'a' will toggle drawing antialiased lines. (Default: disabled)</li>
-<li>Pressing 'c' will toggle clearing the renderer between frames. (Default: disabled)</li>
-<li>Pressing 'd' will dump the memory used by the particles.  This causes performance
+<li>A - toggle drawing antialiased lines. Line drawing must be enabled. (Default: disabled)</li>
+<li>C - toggle clearing the renderer between frames. (Default: disabled)</li>
+<li>M - toggle the color to clear the screen with between black and white. (Default: black)</li>
+<li>D - dump the memory used by the particles.  This causes performance
 to increase, but all existing particles will perish.  The screen will not be cleared.</li>
-<li>Pressing 'k' will toggle automatic particle destruction.  If enabled, particles
+<li>K - toggle automatic particle destruction.  If enabled, particles
 will die after a set amount of frames. (Default: enabled)</li>
-<li>Pressing 'f' will center the cursor on the screen.</li>
-<li>Pressing 'b' will toggle the blend mode between blending and adding. (Default: blending)</li>
+<li>F - center the cursor on the screen.</li>
+<li>B - toggle the blend mode between blending and adding. (Default: blending)</li>
 <li>Pressing certain numbers will change the types of colors that particles will appear as.
 <ul>
 <li>0 - Rainbow (Default)</li>

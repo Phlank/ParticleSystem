@@ -12,6 +12,10 @@ Window::Window() {
     renderLine = DEFAULT_RENDER_LINE;
     antialias = DEFAULT_ANTIALIAS;
     blendmode = DEFAULT_BLENDMODE;
+    clearColor = DEFAULT_CLEARCOLOR;
+    clearRed = DEFAULT_CLEARRED;
+    clearGreen = DEFAULT_CLEARGREEN;
+    clearBlue = DEFAULT_CLEARBLUE;
 }
 
 Window::~Window() {
@@ -77,10 +81,27 @@ bool Window::getBlendMode() {
 
 void Window::setBlendMode(bool blendmode_) {
     if (blendmode_)
-        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-    else
         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_ADD);
+    else
+        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
     blendmode = blendmode_;
+}
+
+bool Window::getClearColor() {
+    return clearColor;
+}
+
+void Window::setClearColor(bool clearColor_) {
+    if (clearColor_) {
+        clearRed = 255;
+        clearGreen = 255;
+        clearBlue = 255;
+    } else {
+        clearRed = 0;
+        clearGreen = 0;
+        clearBlue = 0;
+    }
+    clearColor = clearColor_;
 }
 
 void Window::centerMouse() {
@@ -88,7 +109,7 @@ void Window::centerMouse() {
 }
 
 void Window::clear() {
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_SetRenderDrawColor(renderer, clearRed, clearGreen, clearBlue, 255);
     SDL_RenderClear(renderer);
 }
 
@@ -136,27 +157,24 @@ void Window::drawPixels() {
     }
 }
 
+/* Stuff for drawing antialiased lines. */
 long double ipart(long double x) {
     long double treasure;
     std::modf(x, &treasure);
     return treasure;
 }
-
 long double round(long double x) {
     return ipart(x+0.5);
 }
-
 long double fpart(long double x) {
     long double trash;
     long double treasure;
     treasure = std::modf(x, &trash);
     return treasure;
 }
-
 long double rfpart(long double x) {
     return 1.0-fpart(x);
 }
-
 void Window::drawAALine(double x0, double y0, Pixel* target) {
     long double x1 = target->getPosition().getX();
     long double y1 = target->getPosition().getY();

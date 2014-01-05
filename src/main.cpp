@@ -61,6 +61,11 @@ int main(int argc, char** argv) {
                         else window.setBlendMode(true);
                         std::cout << "Blend mode: " << window.getBlendMode() << "\n";
                         break;
+                    case SDLK_m:
+                        if (window.getClearColor()) window.setClearColor(false);
+                        else window.setClearColor(true);
+                        std::cout << "Clearing color: " << window.getClearColor() << "\n";
+                        break;
                     case SDLK_0:
                         colormode = RAINBOW;
                         std::cout << "Colormode: rainbow\n";

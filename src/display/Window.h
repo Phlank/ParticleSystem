@@ -19,6 +19,8 @@ static const bool DEFAULT_RENDER_LINE = false;
 static const bool DEFAULT_CLEARING = true;
 static const bool DEFAULT_ANTIALIAS = false;
 static const bool DEFAULT_BLENDMODE = false;
+static const bool DEFAULT_CLEARCOLOR = false;
+static const int DEFAULT_CLEARRED = 0, DEFAULT_CLEARGREEN = 0, DEFAULT_CLEARBLUE = 0;
 
 class Window {
 public:
@@ -52,6 +54,10 @@ public:
     bool getBlendMode();
     /// Sets the blend mode
     void setBlendMode(bool blendmode_);
+    /// \return the clearing color
+    bool getClearColor();
+    ///Sets the clearing color
+    void setClearColor(bool clearColor_);
     /// Centers the mouse in the window
     void centerMouse();
 private:
@@ -63,7 +69,8 @@ private:
     SDL_Renderer* renderer;
     SDL_Cursor* cursor;
     std::vector<Pixel>* pixels;
-    bool clearing, autoDelete, renderLine, antialias, blendmode;
+    bool clearing, autoDelete, renderLine, antialias, blendmode, clearColor;
+    Uint8 clearRed, clearGreen, clearBlue;
 };
 
 #endif
