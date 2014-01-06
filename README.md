@@ -31,6 +31,9 @@ will die after a set amount of frames. (Default: enabled)</li>
 <li>3 - Greenscale</li>
 <li>4 - Bluescale</li>
 </ul></li>
+<li>Up/Down - Change the scale of the initial velocity. (Default: 1.0)</li>
+<li>Left Control + Up/Down - Change the scale of the initial acceleration. (Default: 1.0)</li>
+<li>Left Alt + Up/Down - Change the scale of the initial jerk. (Default: 1.0)</li>
 </ul>
 
 <h2>Purpose</h2>

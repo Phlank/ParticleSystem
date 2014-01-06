@@ -51,7 +51,7 @@
         <ccTool>
           <commandlineTool>g++</commandlineTool>
           <commandLine>$(sdl2-config --cflags --libs) -O3</commandLine>
-          <warningLevel>2</warningLevel>
+          <warningLevel>3</warningLevel>
         </ccTool>
         <linkerTool>
           <commandLine>-lSDL2</commandLine>

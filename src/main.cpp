@@ -7,18 +7,56 @@
 
 using namespace std;
 
+enum {RAINBOW, GRAYSCALE, REDSCALE, GREENSCALE, BLUESCALE};
+enum {VEL, ACC, JER};
+
+bool done;
+bool mouseDown;
+bool ctrl, alt, updown; /* Used for changing the scaling values. */
+int mouseX, mouseY;
+int colormode;
+int scaleValue;
+
+/* Used to scale the initial properties of the pixels. */
+long double velScale;
+long double accScale;
+long double jerScale;
+static const long double SCALE_CHANGE = 0.1;
+
+/* Modifies the initial value scales. */
+void modifyScale(bool ctrl_, bool alt_, bool updown_) {
+    if (ctrl_) {
+        if (updown_) accScale += SCALE_CHANGE;
+        else accScale -= SCALE_CHANGE;
+        std::cout << "Acceleration scale: " << accScale << "\n";
+    } else if (alt_) {
+        if (updown_) jerScale += SCALE_CHANGE;
+        else jerScale -= SCALE_CHANGE;
+        std::cout << "Jerk scale: " << jerScale << "\n";
+    } else {
+        if (updown_) velScale += SCALE_CHANGE;
+        else velScale -= SCALE_CHANGE;
+        std::cout << "Velocity scale: " << velScale << "\n";
+    }
+}
+
+/* Main */
 int main(int argc, char** argv) {
     
-    enum {RAINBOW, GRAYSCALE, REDSCALE, GREENSCALE, BLUESCALE};
-    
+    /* SDL initialization. */
     SDL_Init(SDL_INIT_VIDEO);
     SDL_Event event;
     Window window;
-    bool done = false;
-    bool mouseDown = false;
-    bool renderWithLines = false;
-    int mouseX = 0, mouseY = 0;
-    int colormode = RAINBOW;
+    
+    /* Setting default values. */
+    done = false;
+    mouseDown = false;
+    mouseX = mouseY = 0;
+    colormode = RAINBOW;
+    velScale = 1.0;
+    accScale = 1.0;
+    jerScale = 1.0;
+    ctrl = alt = updown = false;
     
     /* Main loop. */
     while (!done) {
@@ -38,7 +76,7 @@ int main(int argc, char** argv) {
                     case SDLK_l:
                         if (window.getRenderLine()) window.setRenderLine(false);
                         else window.setRenderLine(true);
-                        std::cout << "Line rendering: " << renderWithLines << "\n";
+                        std::cout << "Line rendering: " << window.getRenderLine() << "\n";
                         break;
                     /* Toggle clearing the screen between each frame on and off. */
                     case SDLK_c:
@@ -79,26 +117,58 @@ int main(int argc, char** argv) {
                         else window.setClearColor(true);
                         std::cout << "Clearing color: " << window.getClearColor() << "\n";
                         break;
+                    case SDLK_LCTRL:
+                        ctrl = true;
+                        break;
+                    case SDLK_LALT:
+                        alt = true;
+                        break;
+                    case SDLK_UP:
+                        updown = true;
+                        modifyScale(ctrl, alt, updown);
+                        break;
+                    case SDLK_DOWN:
+                        updown = false;
+                        modifyScale(ctrl, alt, updown);
+                        break;
+                    /* Set the value of */
                     /* All color modes are set using the number keys. */
+                    /* Sets the color mode to rainbow. */
                     case SDLK_0:
                         colormode = RAINBOW;
                         std::cout << "Colormode: rainbow\n";
                         break;
+                    /* Sets the color mode to rainbow. */
                     case SDLK_1:
                         colormode = GRAYSCALE;
                         std::cout << "Colormode: grayscale\n";
                         break;
+                    /* Sets the color mode to redscale. */
                     case SDLK_2:
                         colormode = REDSCALE;
                         std::cout << "Colormode: redscale\n";
                         break;
+                    /* Sets the color mode to greenscale. */
                     case SDLK_3:
                         colormode = GREENSCALE;
                         std::cout << "Colormode: greenscale\n";
                         break;
+                    /* Sets the color mode to bluescale. */
                     case SDLK_4:
                         colormode = BLUESCALE;
                         std::cout << "Colormode: bluescale\n";
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case SDL_KEYUP:
+                switch (event.key.keysym.sym) {
+                    case SDLK_LCTRL:
+                        ctrl = false;
+                        break;
+                    case SDLK_LALT:
+                        alt = false;
                         break;
                     default:
                         break;
@@ -127,39 +197,47 @@ int main(int argc, char** argv) {
         if (mouseDown) {
             /* These points are used to define the three pixels. These are simply their initial kinetic properties. */
             Point pos(mouseX, mouseY);
-            Point vel((double)std::rand()/RAND_MAX-0.5, (double)std::rand()/RAND_MAX-0.5);
-            Point acc((double)std::rand()/RAND_MAX-0.5, (double)std::rand()/RAND_MAX-0.5);
-            Point jer((double)std::rand()/RAND_MAX-0.5, (double)std::rand()/RAND_MAX-0.5);
+            Point vel(((double) std::rand()/RAND_MAX-0.5)*velScale, ((double) std::rand()/RAND_MAX-0.5)*velScale);
+            Point acc(((double) std::rand()/RAND_MAX-0.5)*accScale, ((double) std::rand()/RAND_MAX-0.5)*accScale);
+            Point jer(((double) std::rand()/RAND_MAX-0.5)*jerScale, ((double) std::rand()/RAND_MAX-0.5)*jerScale);
             /* Construct the pixels with kinetic properties. */
             Pixel pixel1(pos, vel);
             Pixel pixel2(pos, vel, acc);
             Pixel pixel3(pos, vel, acc, jer);
-            /* Certain color modes require constant, but random colors.  These are those RGB. */
-            int temp1 = std::rand()%256;
-            int temp2 = std::rand()%256;
-            int temp3 = std::rand()%256;
+            /* Certain color modes require constant colors. */
+            Uint8 temp1;
+            Uint8 temp2;
+            Uint8 temp3;
             /* Sets the color of the pixels based on the colormode. */
             switch (colormode) {
+                /* Pixels have random RGB values. */
                 case RAINBOW:
                     pixel1.setColor(std::rand()%256, std::rand()%256, std::rand()%256);
                     pixel2.setColor(std::rand()%256, std::rand()%256, std::rand()%256);
                     pixel3.setColor(std::rand()%256, std::rand()%256, std::rand()%256);
                     break;
+                /* Pixels have locally consistent random RGB values. */
                 case GRAYSCALE:
+                    temp1 = std::rand()%256;
+                    temp2 = std::rand()%256;
+                    temp3 = std::rand()%256;
                     pixel1.setColor(temp1, temp1, temp1);
                     pixel2.setColor(temp2, temp2, temp2);
                     pixel3.setColor(temp3, temp3, temp3);
                     break;
+                /* Pixels have a random R value, and GB equal zero. */
                 case REDSCALE:
                     pixel1.setColor(std::rand()%256, 0, 0);
                     pixel2.setColor(std::rand()%256, 0, 0);
                     pixel3.setColor(std::rand()%256, 0, 0);
                     break;
+                /* Pixels have a random G value, and RB equal zero. */
                 case GREENSCALE:
                     pixel1.setColor(0, std::rand()%256, 0);
                     pixel2.setColor(0, std::rand()%256, 0);
                     pixel3.setColor(0, std::rand()%256, 0);
                     break;
+                /* Pixels have a random B value, and RG equal zero. */
                 case BLUESCALE:
                     pixel1.setColor(0, 0, std::rand()%256);
                     pixel2.setColor(0, 0, std::rand()%256);
