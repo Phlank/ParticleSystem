@@ -16,6 +16,7 @@ bool ctrl, alt, updown; /* Used for changing the scaling values. */
 int mouseX, mouseY;
 int colormode;
 int scaleValue;
+int numberOfPackets; /* The number of groups of particles generated with each frame. */
 
 /* Used to scale the initial properties of the pixels. */
 long double velScale;
@@ -57,6 +58,7 @@ int main(int argc, char** argv) {
     accScale = 1.0;
     jerScale = 1.0;
     ctrl = alt = updown = false;
+    numberOfPackets = 1;
     
     /* Main loop. */
     while (!done) {
@@ -117,19 +119,32 @@ int main(int argc, char** argv) {
                         else window.setClearColor(true);
                         std::cout << "Clearing color: " << window.getClearColor() << "\n";
                         break;
+                    /* Used to modify the initial acceleration. */
                     case SDLK_LCTRL:
                         ctrl = true;
                         break;
+                    /* Used to modify the initial jerk. */
                     case SDLK_LALT:
                         alt = true;
                         break;
+                    /* Raise the initial velocity, acceleration, or jerk by an amount of SCALE_CHANGE. */
                     case SDLK_UP:
                         updown = true;
                         modifyScale(ctrl, alt, updown);
                         break;
+                    /* Lower the initial velocity, acceleration, or jerk by an amount of SCALE_CHANGE. */
                     case SDLK_DOWN:
                         updown = false;
                         modifyScale(ctrl, alt, updown);
+                        break;
+                    /* Increase the number of packets of particles released per frame. */
+                    case SDLK_RIGHT:
+                        numberOfPackets++;
+                        break;
+                    /* Decrease the number of packets of particles released per frame. */
+                    case SDLK_LEFT:
+                        if (numberOfPackets == 1) break;
+                        else numberOfPackets--;
                         break;
                     /* Set the value of */
                     /* All color modes are set using the number keys. */
@@ -195,61 +210,64 @@ int main(int argc, char** argv) {
         
         /* Makes new pixels if the mouse is pressed down. */
         if (mouseDown) {
-            /* These points are used to define the three pixels. These are simply their initial kinetic properties. */
-            Point pos(mouseX, mouseY);
-            Point vel(((double) std::rand()/RAND_MAX-0.5)*velScale, ((double) std::rand()/RAND_MAX-0.5)*velScale);
-            Point acc(((double) std::rand()/RAND_MAX-0.5)*accScale, ((double) std::rand()/RAND_MAX-0.5)*accScale);
-            Point jer(((double) std::rand()/RAND_MAX-0.5)*jerScale, ((double) std::rand()/RAND_MAX-0.5)*jerScale);
-            /* Construct the pixels with kinetic properties. */
-            Pixel pixel1(pos, vel);
-            Pixel pixel2(pos, vel, acc);
-            Pixel pixel3(pos, vel, acc, jer);
-            /* Certain color modes require constant colors. */
-            Uint8 temp1;
-            Uint8 temp2;
-            Uint8 temp3;
-            /* Sets the color of the pixels based on the colormode. */
-            switch (colormode) {
-                /* Pixels have random RGB values. */
-                case RAINBOW:
-                    pixel1.setColor(std::rand()%256, std::rand()%256, std::rand()%256);
-                    pixel2.setColor(std::rand()%256, std::rand()%256, std::rand()%256);
-                    pixel3.setColor(std::rand()%256, std::rand()%256, std::rand()%256);
-                    break;
-                /* Pixels have locally consistent random RGB values. */
-                case GRAYSCALE:
-                    temp1 = std::rand()%256;
-                    temp2 = std::rand()%256;
-                    temp3 = std::rand()%256;
-                    pixel1.setColor(temp1, temp1, temp1);
-                    pixel2.setColor(temp2, temp2, temp2);
-                    pixel3.setColor(temp3, temp3, temp3);
-                    break;
-                /* Pixels have a random R value, and GB equal zero. */
-                case REDSCALE:
-                    pixel1.setColor(std::rand()%256, 0, 0);
-                    pixel2.setColor(std::rand()%256, 0, 0);
-                    pixel3.setColor(std::rand()%256, 0, 0);
-                    break;
-                /* Pixels have a random G value, and RB equal zero. */
-                case GREENSCALE:
-                    pixel1.setColor(0, std::rand()%256, 0);
-                    pixel2.setColor(0, std::rand()%256, 0);
-                    pixel3.setColor(0, std::rand()%256, 0);
-                    break;
-                /* Pixels have a random B value, and RG equal zero. */
-                case BLUESCALE:
-                    pixel1.setColor(0, 0, std::rand()%256);
-                    pixel2.setColor(0, 0, std::rand()%256);
-                    pixel3.setColor(0, 0, std::rand()%256);
-                    break;
-                default:
-                    break;
+            int i;
+            for (i = 0; i < numberOfPackets; i++) {
+                /* These points are used to define the three pixels. These are simply their initial kinetic properties. */
+                Point pos(mouseX, mouseY);
+                Point vel(((double) std::rand()/RAND_MAX-0.5)*velScale, ((double) std::rand()/RAND_MAX-0.5)*velScale);
+                Point acc(((double) std::rand()/RAND_MAX-0.5)*accScale, ((double) std::rand()/RAND_MAX-0.5)*accScale);
+                Point jer(((double) std::rand()/RAND_MAX-0.5)*jerScale, ((double) std::rand()/RAND_MAX-0.5)*jerScale);
+                /* Construct the pixels with kinetic properties. */
+                Pixel pixel1(pos, vel);
+                Pixel pixel2(pos, vel, acc);
+                Pixel pixel3(pos, vel, acc, jer);
+                /* Certain color modes require constant colors. */
+                Uint8 temp1;
+                Uint8 temp2;
+                Uint8 temp3;
+                /* Sets the color of the pixels based on the colormode. */
+                switch (colormode) {
+                    /* Pixels have random RGB values. */
+                    case RAINBOW:
+                        pixel1.setColor(std::rand()%256, std::rand()%256, std::rand()%256);
+                        pixel2.setColor(std::rand()%256, std::rand()%256, std::rand()%256);
+                        pixel3.setColor(std::rand()%256, std::rand()%256, std::rand()%256);
+                        break;
+                    /* Pixels have locally consistent random RGB values. */
+                    case GRAYSCALE:
+                        temp1 = std::rand()%256;
+                        temp2 = std::rand()%256;
+                        temp3 = std::rand()%256;
+                        pixel1.setColor(temp1, temp1, temp1);
+                        pixel2.setColor(temp2, temp2, temp2);
+                        pixel3.setColor(temp3, temp3, temp3);
+                        break;
+                    /* Pixels have a random R value, and GB equal zero. */
+                    case REDSCALE:
+                        pixel1.setColor(std::rand()%256, 0, 0);
+                        pixel2.setColor(std::rand()%256, 0, 0);
+                        pixel3.setColor(std::rand()%256, 0, 0);
+                        break;
+                    /* Pixels have a random G value, and RB equal zero. */
+                    case GREENSCALE:
+                        pixel1.setColor(0, std::rand()%256, 0);
+                        pixel2.setColor(0, std::rand()%256, 0);
+                        pixel3.setColor(0, std::rand()%256, 0);
+                        break;
+                    /* Pixels have a random B value, and RG equal zero. */
+                    case BLUESCALE:
+                        pixel1.setColor(0, 0, std::rand()%256);
+                        pixel2.setColor(0, 0, std::rand()%256);
+                        pixel3.setColor(0, 0, std::rand()%256);
+                        break;
+                    default:
+                        break;
+                }
+                /* Add the pixels to the window. */
+                window.addPixel(pixel1);
+                window.addPixel(pixel2);
+                window.addPixel(pixel3);
             }
-            /* Add the pixels to the window. */
-            window.addPixel(pixel1);
-            window.addPixel(pixel2);
-            window.addPixel(pixel3);
         }
         /* Delay for framerate, then draw the window. */
         SDL_Delay(5);   //When this line is not present, the program encounters large delays when drawing.

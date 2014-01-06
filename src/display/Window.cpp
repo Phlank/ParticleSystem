@@ -16,6 +16,7 @@ Window::Window() {
     clearRed = DEFAULT_CLEARRED;
     clearGreen = DEFAULT_CLEARGREEN;
     clearBlue = DEFAULT_CLEARBLUE;
+    autoDelete = DEFAULT_AUTO_DELETE;
 }
 
 Window::~Window() {

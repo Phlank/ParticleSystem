@@ -34,6 +34,8 @@ will die after a set amount of frames. (Default: enabled)</li>
 <li>Up/Down - Change the scale of the initial velocity. (Default: 1.0)</li>
 <li>Left Control + Up/Down - Change the scale of the initial acceleration. (Default: 1.0)</li>
 <li>Left Alt + Up/Down - Change the scale of the initial jerk. (Default: 1.0)</li>
+<li>Left/Right - Change the number of packets of particles that are created when
+a click occurs. (Default: 1)</li>
 </ul>
 
 <h2>Purpose</h2>
