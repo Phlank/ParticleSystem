@@ -7,7 +7,7 @@
 
 using namespace std;
 
-enum {RAINBOW, GRAYSCALE, REDSCALE, GREENSCALE, BLUESCALE};
+enum {RAINBOW, GRAYSCALE, REDSCALE, GREENSCALE, BLUESCALE, PURPLESCALE, ORANGESCALE, YELLOWSCALE};
 enum {VEL, ACC, JER};
 
 bool done;
@@ -181,6 +181,21 @@ int main(int argc, char** argv) {
                         colormode = BLUESCALE;
                         //std::cout << "Colormode: bluescale\n";
                         break;
+                    /* Sets the color mode to purplescale. */
+                    case SDLK_5:
+                        colormode = PURPLESCALE;
+                        //std::cout << "Colormode: purplescale\n";
+                        break;
+                    /* Sets the color mode to orangescale. */
+                    case SDLK_6:
+                        colormode = ORANGESCALE;
+                        //std::cout << "Colormode: orangescale\n";
+                        break;
+                    /* Sets the color mode to yellowscale. */
+                    case SDLK_7:
+                        colormode = YELLOWSCALE;
+                        //std::cout << "Colormode: yellowscale\n";
+                        break;
                     default:
                         break;
                 }
@@ -269,6 +284,33 @@ int main(int argc, char** argv) {
                             pixel2.setColor(0, 0, std::rand()%256);
                             pixel3.setColor(0, 0, std::rand()%256);
                             break;
+                        /* Pixels have a random B value, R is half of B, and G is zero. */
+                        case PURPLESCALE:
+                            temp1 = std::rand()%256;
+                            temp2 = std::rand()%256;
+                            temp3 = std::rand()%256;
+                            pixel1.setColor(temp1/2, 0, temp1);
+                            pixel2.setColor(temp2/2, 0, temp2);
+                            pixel3.setColor(temp3/2, 0, temp3);
+                            break;
+                        /* G is half of R, B is zero. */
+                        case ORANGESCALE:
+                            temp1 = std::rand()%256;
+                            temp2 = std::rand()%256;
+                            temp3 = std::rand()%256;
+                            pixel1.setColor(temp1, temp1/2, 0);
+                            pixel2.setColor(temp2, temp2/2, 0);
+                            pixel3.setColor(temp3, temp3/2, 0);
+                            break;
+                        /* R = G, B = 0. */
+                        case YELLOWSCALE:
+                            temp1 = std::rand()%256;
+                            temp2 = std::rand()%256;
+                            temp3 = std::rand()%256;
+                            pixel1.setColor(temp1, temp1, 0);
+                            pixel2.setColor(temp2, temp2, 0);
+                            pixel3.setColor(temp3, temp3, 0);
+                            break;
                         default:
                             break;
                     }
@@ -328,6 +370,33 @@ int main(int argc, char** argv) {
                         pixel1.setColor(0, 0, std::rand()%256);
                         pixel2.setColor(0, 0, std::rand()%256);
                         pixel3.setColor(0, 0, std::rand()%256);
+                        break;
+                    /* Pixels have a random B value, R is half of B, and G is zero. */
+                    case PURPLESCALE:
+                        temp1 = std::rand()%256;
+                        temp2 = std::rand()%256;
+                        temp3 = std::rand()%256;
+                        pixel1.setColor(temp1/2, 0, temp1);
+                        pixel2.setColor(temp2/2, 0, temp2);
+                        pixel3.setColor(temp3/2, 0, temp3);
+                        break;
+                    /* G is half of R, B is zero. */
+                    case ORANGESCALE:
+                        temp1 = std::rand()%256;
+                        temp2 = std::rand()%256;
+                        temp3 = std::rand()%256;
+                        pixel1.setColor(temp1, temp1/2, 0);
+                        pixel2.setColor(temp2, temp2/2, 0);
+                        pixel3.setColor(temp3, temp3/2, 0);
+                        break;
+                    /* R = G, B = 0. */
+                    case YELLOWSCALE:
+                        temp1 = std::rand()%256;
+                        temp2 = std::rand()%256;
+                        temp3 = std::rand()%256;
+                        pixel1.setColor(temp1, temp1, 0);
+                        pixel2.setColor(temp2, temp2, 0);
+                        pixel3.setColor(temp3, temp3, 0);
                         break;
                     default:
                         break;

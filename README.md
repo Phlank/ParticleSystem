@@ -30,13 +30,16 @@ will die after a set amount of frames. (Default: enabled)</li>
 <li>2 - Redscale</li>
 <li>3 - Greenscale</li>
 <li>4 - Bluescale</li>
+<li>5 - Purplescale</li>
+<li>6 - Orangescale</li>
+<li>7 - Yellowscale</li>
 </ul></li>
 <li>Up/Down - Change the scale of the initial velocity. (Default: 1.0)</li>
 <li>Left Control + Up/Down - Change the scale of the initial acceleration. (Default: 1.0)</li>
 <li>Left Alt + Up/Down - Change the scale of the initial jerk. (Default: 1.0)</li>
 <li>Left/Right - Change the number of packets of particles that are created when
 a click occurs. (Default: 1)</li>
-<li>Space - toggle automatic particle generation. (Default: off)</li>
+<li>Space - toggle automatic particle generation.  This also hides the mouse. (Default: off)</li>
 </ul>
 
 <h2>Purpose</h2>
