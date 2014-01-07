@@ -13,7 +13,7 @@ static const int DEFAULT_WINDOW_Y = 0;
 static const int DEFAULT_WINDOW_W = 0;
 static const int DEFAULT_WINDOW_H = 0;
 static const int DEFAULT_WINDOW_FLAGS = SDL_WINDOW_FULLSCREEN_DESKTOP;
-static const int DEFAULT_PIXEL_PADDING = 1; //How far out of the display a pixel can get before it is destroyed
+static const int DEFAULT_PIXEL_PADDING = 5; //How far out of the display a pixel can get before it is destroyed
 static const bool DEFAULT_AUTO_DELETE = true;
 static const bool DEFAULT_RENDER_LINE = false;
 static const bool DEFAULT_CLEARING = true;
@@ -51,25 +51,31 @@ public:
     /// Sets the antialias setting
     void setAntialias(bool antialias_);
     /// \return the blendmode
-    bool getBlendMode();
+    int getBlendMode();
     /// Sets the blend mode
-    void setBlendMode(bool blendmode_);
+    void setBlendMode(int blendmode_);
     /// \return the clearing color
     bool getClearColor();
     ///Sets the clearing color
     void setClearColor(bool clearColor_);
     /// Centers the mouse in the window
     void centerMouse();
+    /// \return the width of the window
+    int getWidth();
+    /// \return the height of the window
+    int getHeight();
+    /// Show/Hide the cursor
+    void setCursorVisible(bool option_);
 private:
     void clear();
     void drawPixels();
     void drawAALine(double x1, double y1, Pixel* target);
-    int width, height;
+    int width, height, blendmode;
     SDL_Window* window;
     SDL_Renderer* renderer;
     SDL_Cursor* cursor;
     std::vector<Pixel>* pixels;
-    bool clearing, autoDelete, renderLine, antialias, blendmode, clearColor;
+    bool clearing, autoDelete, renderLine, antialias, clearColor;
     Uint8 clearRed, clearGreen, clearBlue;
 };
 

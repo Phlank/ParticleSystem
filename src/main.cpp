@@ -12,6 +12,7 @@ enum {VEL, ACC, JER};
 
 bool done;
 bool mouseDown;
+bool autoGeneration;
 bool ctrl, alt, updown; /* Used for changing the scaling values. */
 int mouseX, mouseY;
 int colormode;
@@ -29,15 +30,15 @@ void modifyScale(bool ctrl_, bool alt_, bool updown_) {
     if (ctrl_) {
         if (updown_) accScale += SCALE_CHANGE;
         else accScale -= SCALE_CHANGE;
-        std::cout << "Acceleration scale: " << accScale << "\n";
+        //std::cout << "Acceleration scale: " << accScale << "\n";
     } else if (alt_) {
         if (updown_) jerScale += SCALE_CHANGE;
         else jerScale -= SCALE_CHANGE;
-        std::cout << "Jerk scale: " << jerScale << "\n";
+        //std::cout << "Jerk scale: " << jerScale << "\n";
     } else {
         if (updown_) velScale += SCALE_CHANGE;
         else velScale -= SCALE_CHANGE;
-        std::cout << "Velocity scale: " << velScale << "\n";
+        //std::cout << "Velocity scale: " << velScale << "\n";
     }
 }
 
@@ -52,6 +53,7 @@ int main(int argc, char** argv) {
     /* Setting default values. */
     done = false;
     mouseDown = false;
+    autoGeneration = false;
     mouseX = mouseY = 0;
     colormode = RAINBOW;
     velScale = 1.0;
@@ -72,30 +74,30 @@ int main(int argc, char** argv) {
                     /* Exits the program. */
                     case SDLK_q:
                         done = true;
-                        std::cout << "Exiting\n";
+                        //std::cout << "Exiting\n";
                         break;
                     /* Toggle rendering line segments instead of singular points off and on. */
                     case SDLK_l:
                         if (window.getRenderLine()) window.setRenderLine(false);
                         else window.setRenderLine(true);
-                        std::cout << "Line rendering: " << window.getRenderLine() << "\n";
+                        //std::cout << "Line rendering: " << window.getRenderLine() << "\n";
                         break;
                     /* Toggle clearing the screen between each frame on and off. */
                     case SDLK_c:
                         if (window.getClearing()) window.setClearing(false);
                         else window.setClearing(true);
-                        std::cout << "Window clearing: " << window.getClearing() << "\n";
+                        //std::cout << "Window clearing: " << window.getClearing() << "\n";
                         break;
                     /* Dump the current pixels. */
                     case SDLK_d:
                         window.dump();
-                        std::cout << "Particles dumped\n";
+                        //std::cout << "Particles dumped\n";
                         break;
                     /* Toggle automatic pixel deletion on and off. */
                     case SDLK_k:
                         if (window.getAutoDelete()) window.setAutoDelete(false);
                         else window.setAutoDelete(true);
-                        std::cout << "Auto deletion: " << window.getAutoDelete() << "\n";
+                        //std::cout << "Auto deletion: " << window.getAutoDelete() << "\n";
                         break;
                     /* Center the mouse in the window. */
                     case SDLK_f:
@@ -105,19 +107,20 @@ int main(int argc, char** argv) {
                     case SDLK_a:
                         if (window.getAntialias()) window.setAntialias(false);
                         else window.setAntialias(true);
-                        std::cout << "Antialiasing: " << window.getAntialias() << "\n";
+                        //std::cout << "Antialiasing: " << window.getAntialias() << "\n";
                         break;
                     /* Toggle the blend mode between blend and add. */
                     case SDLK_b:
-                        if (window.getBlendMode()) window.setBlendMode(false);
-                        else window.setBlendMode(true);
-                        std::cout << "Blend mode: " << window.getBlendMode() << "\n";
+                        if (window.getBlendMode() == 0) window.setBlendMode(1);
+                        else if (window.getBlendMode() == 1) window.setBlendMode(2);
+                        else window.setBlendMode(0);
+                        //std::cout << "Blend mode: " << window.getBlendMode() << "\n";
                         break;
                     /* Toggle the background color between black and white. */
                     case SDLK_m:
                         if (window.getClearColor()) window.setClearColor(false);
                         else window.setClearColor(true);
-                        std::cout << "Clearing color: " << window.getClearColor() << "\n";
+                        //std::cout << "Clearing color: " << window.getClearColor() << "\n";
                         break;
                     /* Used to modify the initial acceleration. */
                     case SDLK_LCTRL:
@@ -140,39 +143,43 @@ int main(int argc, char** argv) {
                     /* Increase the number of packets of particles released per frame. */
                     case SDLK_RIGHT:
                         numberOfPackets++;
-                        cout << "Number of packets: " << numberOfPackets << "\n";
+                       //std::cout << "Number of packets: " << numberOfPackets << "\n";
                         break;
                     /* Decrease the number of packets of particles released per frame. */
                     case SDLK_LEFT:
                         if (numberOfPackets != 1) numberOfPackets--;
-                        cout << "Number of packets: " << numberOfPackets << "\n";
+                       //std::cout << "Number of packets: " << numberOfPackets << "\n";
                         break;
-                    /* Set the value of */
+                    /* Toggle automatic particle generation*/
+                    case SDLK_SPACE:
+                        if (autoGeneration) { autoGeneration = false; window.setCursorVisible(true); }
+                        else { autoGeneration = true; window.setCursorVisible(false); }
+                        break;
                     /* All color modes are set using the number keys. */
                     /* Sets the color mode to rainbow. */
                     case SDLK_0:
                         colormode = RAINBOW;
-                        std::cout << "Colormode: rainbow\n";
+                        //std::cout << "Colormode: rainbow\n";
                         break;
                     /* Sets the color mode to rainbow. */
                     case SDLK_1:
                         colormode = GRAYSCALE;
-                        std::cout << "Colormode: grayscale\n";
+                        //std::cout << "Colormode: grayscale\n";
                         break;
                     /* Sets the color mode to redscale. */
                     case SDLK_2:
                         colormode = REDSCALE;
-                        std::cout << "Colormode: redscale\n";
+                        //std::cout << "Colormode: redscale\n";
                         break;
                     /* Sets the color mode to greenscale. */
                     case SDLK_3:
                         colormode = GREENSCALE;
-                        std::cout << "Colormode: greenscale\n";
+                        //std::cout << "Colormode: greenscale\n";
                         break;
                     /* Sets the color mode to bluescale. */
                     case SDLK_4:
                         colormode = BLUESCALE;
-                        std::cout << "Colormode: bluescale\n";
+                        //std::cout << "Colormode: bluescale\n";
                         break;
                     default:
                         break;
@@ -209,12 +216,73 @@ int main(int argc, char** argv) {
                 break;
         } /* End of event processing */
         
-        /* Makes new pixels if the mouse is pressed down. */
-        if (mouseDown) {
+        if (!autoGeneration) {
+            /* Makes new pixels if the mouse is pressed down. */
+            if (mouseDown) {
+                int i;
+                for (i = 0; i < numberOfPackets; i++) {
+                    /* These points are used to define the three pixels. These are simply their initial kinetic properties. */
+                    Point pos(mouseX, mouseY);
+                    Point vel(((double) std::rand()/RAND_MAX-0.5)*velScale, ((double) std::rand()/RAND_MAX-0.5)*velScale);
+                    Point acc(((double) std::rand()/RAND_MAX-0.5)*accScale, ((double) std::rand()/RAND_MAX-0.5)*accScale);
+                    Point jer(((double) std::rand()/RAND_MAX-0.5)*jerScale, ((double) std::rand()/RAND_MAX-0.5)*jerScale);
+                    /* Construct the pixels with kinetic properties. */
+                    Pixel pixel1(pos, vel);
+                    Pixel pixel2(pos, vel, acc);
+                    Pixel pixel3(pos, vel, acc, jer);
+                    /* Certain color modes require constant colors. */
+                    uint8_t temp1;
+                    uint8_t temp2;
+                    uint8_t temp3;
+                    /* Sets the color of the pixels based on the colormode. */
+                    switch (colormode) {
+                        /* Pixels have random RGB values. */
+                        case RAINBOW:
+                            pixel1.setColor(std::rand()%256, std::rand()%256, std::rand()%256);
+                            pixel2.setColor(std::rand()%256, std::rand()%256, std::rand()%256);
+                            pixel3.setColor(std::rand()%256, std::rand()%256, std::rand()%256);
+                            break;
+                        /* Pixels have locally consistent random RGB values. */
+                        case GRAYSCALE:
+                            temp1 = std::rand()%256;
+                            temp2 = std::rand()%256;
+                            temp3 = std::rand()%256;
+                            pixel1.setColor(temp1, temp1, temp1);
+                            pixel2.setColor(temp2, temp2, temp2);
+                            pixel3.setColor(temp3, temp3, temp3);
+                            break;
+                        /* Pixels have a random R value, and GB equal zero. */
+                        case REDSCALE:
+                            pixel1.setColor(std::rand()%256, 0, 0);
+                            pixel2.setColor(std::rand()%256, 0, 0);
+                            pixel3.setColor(std::rand()%256, 0, 0);
+                            break;
+                        /* Pixels have a random G value, and RB equal zero. */
+                        case GREENSCALE:
+                            pixel1.setColor(0, std::rand()%256, 0);
+                            pixel2.setColor(0, std::rand()%256, 0);
+                            pixel3.setColor(0, std::rand()%256, 0);
+                            break;
+                        /* Pixels have a random B value, and RG equal zero. */
+                        case BLUESCALE:
+                            pixel1.setColor(0, 0, std::rand()%256);
+                            pixel2.setColor(0, 0, std::rand()%256);
+                            pixel3.setColor(0, 0, std::rand()%256);
+                            break;
+                        default:
+                            break;
+                    }
+                    /* Add the pixels to the window. */
+                    window.addPixel(pixel1);
+                    window.addPixel(pixel2);
+                    window.addPixel(pixel3);
+                }
+            }
+        } else {
             int i;
             for (i = 0; i < numberOfPackets; i++) {
                 /* These points are used to define the three pixels. These are simply their initial kinetic properties. */
-                Point pos(mouseX, mouseY);
+                Point pos(window.getWidth()/2, window.getHeight()/2);
                 Point vel(((double) std::rand()/RAND_MAX-0.5)*velScale, ((double) std::rand()/RAND_MAX-0.5)*velScale);
                 Point acc(((double) std::rand()/RAND_MAX-0.5)*accScale, ((double) std::rand()/RAND_MAX-0.5)*accScale);
                 Point jer(((double) std::rand()/RAND_MAX-0.5)*jerScale, ((double) std::rand()/RAND_MAX-0.5)*jerScale);
@@ -270,6 +338,7 @@ int main(int argc, char** argv) {
                 window.addPixel(pixel3);
             }
         }
+        
         /* Delay for framerate, then draw the window. */
         SDL_Delay(5);   //When this line is not present, the program encounters large delays when drawing.
         window.draw();

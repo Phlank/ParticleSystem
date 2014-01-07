@@ -5,7 +5,7 @@ Point::Point() {
     y = DEFAULT_Y;
 }
 
-Point::Point(long double x_, long double y_) {
+Point::Point(float x_, float y_) {
     x = x_;
     y = y_;
 }
@@ -27,10 +27,10 @@ double Point::getY() {
     return y;
 }
 
-void Point::setX(long double x_) {
+void Point::setX(float x_) {
     x = x_;
 }
 
-void Point::setY(long double y_) {
+void Point::setY(float y_) {
     y = y_;
 }

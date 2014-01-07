@@ -5,6 +5,7 @@ Window::Window() {
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
     cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);
+    SDL_ShowCursor(1);
     SDL_GetWindowSize(window, &width, &height);
     SDL_WarpMouseInWindow(window, width/2, height/2);
     clearing = DEFAULT_CLEARING;
@@ -76,15 +77,17 @@ void Window::setAntialias(bool antialias_) {
     antialias = antialias_;
 }
 
-bool Window::getBlendMode() {
+int Window::getBlendMode() {
     return blendmode;
 }
 
-void Window::setBlendMode(bool blendmode_) {
-    if (blendmode_)
+void Window::setBlendMode(int blendmode_) {
+    if (blendmode_ == 0)
         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_ADD);
-    else
+    else if (blendmode_ == 1)
         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    else
+        SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
     blendmode = blendmode_;
 }
 
@@ -107,6 +110,18 @@ void Window::setClearColor(bool clearColor_) {
 
 void Window::centerMouse() {
     SDL_WarpMouseInWindow(window, width/2, height/2);
+}
+
+int Window::getWidth() {
+    return width;
+}
+
+int Window::getHeight() {
+    return height;
+}
+
+void Window::setCursorVisible(bool option_) {
+    SDL_ShowCursor(option_);
 }
 
 void Window::clear() {
@@ -159,27 +174,27 @@ void Window::drawPixels() {
 }
 
 /* Stuff for drawing antialiased lines. */
-long double ipart(long double x) {
-    long double treasure;
+float ipart(float x) {
+    float treasure;
     std::modf(x, &treasure);
     return treasure;
 }
-long double round(long double x) {
+float round(float x) {
     return ipart(x+0.5);
 }
-long double fpart(long double x) {
-    long double trash;
-    long double treasure;
+float fpart(float x) {
+    float trash;
+    float treasure;
     treasure = std::modf(x, &trash);
     return treasure;
 }
-long double rfpart(long double x) {
+float rfpart(float x) {
     return 1.0-fpart(x);
 }
 void Window::drawAALine(double x0, double y0, Pixel* target) {
-    long double x1 = target->getPosition().getX();
-    long double y1 = target->getPosition().getY();
-    long double temp;
+    float x1 = target->getPosition().getX();
+    float y1 = target->getPosition().getY();
+    float temp;
     
     Uint8 redness = target->getRed();
     Uint8 greenness = target->getGreen();
@@ -199,16 +214,16 @@ void Window::drawAALine(double x0, double y0, Pixel* target) {
     }
     
     //Evaluate the change between the endpoints, and the gradient slope
-    long double dx = x1-x0;
-    long double dy = y1-y0;
-    long double gradient = dy/dx;
+    float dx = x1-x0;
+    float dy = y1-y0;
+    float gradient = dy/dx;
     
     //Handle the first endpoint
     int xend = round(x0);
     int yend = y0+gradient*(xend-x0);
-    long double xgap = fpart(x0+0.5);
-    long double xpxl1 = xend;
-    long double ypxl1 = ipart(yend);
+    float xgap = fpart(x0+0.5);
+    float xpxl1 = xend;
+    float ypxl1 = ipart(yend);
     if (steep) {
         SDL_SetRenderDrawColor(renderer, redness, greenness, blueness, rfpart(yend)*xgap*brightness);
         SDL_RenderDrawPoint(renderer, ypxl1, xpxl1);
@@ -220,14 +235,14 @@ void Window::drawAALine(double x0, double y0, Pixel* target) {
         SDL_SetRenderDrawColor(renderer, redness, greenness, blueness, fpart(yend)*xgap*brightness);
         SDL_RenderDrawPoint(renderer, xpxl1, ypxl1+1);
     }
-    long double intery = yend+gradient; //First y-intersection for the main loop
+    float intery = yend+gradient; //First y-intersection for the main loop
     
     //Handle the second endpoint
     xend = round(x1);
     yend = y1+gradient*(xend-x1);
     xgap = fpart(x1 + 0.5);
-    long double xpxl2 = xend; //this will be used in the main loop
-    long double ypxl2 = ipart(yend);
+    float xpxl2 = xend; //this will be used in the main loop
+    float ypxl2 = ipart(yend);
     if (steep) {
         SDL_SetRenderDrawColor(renderer, redness, greenness, blueness, rfpart(yend)*xgap*brightness);
         SDL_RenderDrawPoint(renderer, ypxl2, xpxl2);

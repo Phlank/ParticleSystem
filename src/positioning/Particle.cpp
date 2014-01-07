@@ -90,10 +90,10 @@ bool Particle::runFrame() {
     if (life == 0)
         return false;
     else {
-        long double initialAccelerationX = acceleration.getX();
-        long double initialAccelerationY = acceleration.getY();
-        long double initialVelocityX = velocity.getX();
-        long double initialVelocityY = velocity.getY();
+        float initialAccelerationX = acceleration.getX();
+        float initialAccelerationY = acceleration.getY();
+        float initialVelocityX = velocity.getX();
+        float initialVelocityY = velocity.getY();
         acceleration.setX(initialAccelerationX+jerk.getX());
         acceleration.setY(initialAccelerationY+jerk.getY());
         velocity.setX(initialVelocityX+(initialAccelerationX+acceleration.getX())/2);
