@@ -140,11 +140,12 @@ int main(int argc, char** argv) {
                     /* Increase the number of packets of particles released per frame. */
                     case SDLK_RIGHT:
                         numberOfPackets++;
+                        cout << "Number of packets: " << numberOfPackets << "\n";
                         break;
                     /* Decrease the number of packets of particles released per frame. */
                     case SDLK_LEFT:
-                        if (numberOfPackets == 1) break;
-                        else numberOfPackets--;
+                        if (numberOfPackets != 1) numberOfPackets--;
+                        cout << "Number of packets: " << numberOfPackets << "\n";
                         break;
                     /* Set the value of */
                     /* All color modes are set using the number keys. */
@@ -222,9 +223,9 @@ int main(int argc, char** argv) {
                 Pixel pixel2(pos, vel, acc);
                 Pixel pixel3(pos, vel, acc, jer);
                 /* Certain color modes require constant colors. */
-                Uint8 temp1;
-                Uint8 temp2;
-                Uint8 temp3;
+                uint8_t temp1;
+                uint8_t temp2;
+                uint8_t temp3;
                 /* Sets the color of the pixels based on the colormode. */
                 switch (colormode) {
                     /* Pixels have random RGB values. */
