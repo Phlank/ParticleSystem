@@ -104,20 +104,18 @@ void setPixelColors(Pixel* p1, Pixel* p2, Pixel* p3) {
     }
 }
 
-/* Modifies the initial value scales. */
 void modifyScale(bool ctrl_, bool alt_, bool updown_) {
     if (ctrl_) {
         if (updown_) accScale += SCALE_CHANGE;
-        else accScale -= SCALE_CHANGE;
+        else if (accScale > 0.0) accScale -= SCALE_CHANGE;
     } else if (alt_) {
         if (updown_) jerScale += SCALE_CHANGE;
-        else jerScale -= SCALE_CHANGE;
+        else if (jerScale > 0.0) jerScale -= SCALE_CHANGE;
     } else {
         if (updown_) velScale += SCALE_CHANGE;
-        else velScale -= SCALE_CHANGE;
+        else if (velScale > 0.0) velScale -= SCALE_CHANGE;
     }
 }
-
 void toggleLineRendering() {
     if (window.getRenderLine()) window.setRenderLine(false);
     else window.setRenderLine(true);
