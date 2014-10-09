@@ -1,7 +1,7 @@
 #include "Window.h"
 
 Window::Window() {
-    window = SDL_CreateWindow(DEFAULT_NAME, DEFAULT_WINDOW_X, DEFAULT_WINDOW_Y, 640, 480, SDL_WINDOW_FULLSCREEN_DESKTOP);
+    window = SDL_CreateWindow(DEFAULT_NAME, DEFAULT_WINDOW_X, DEFAULT_WINDOW_Y, 1000, 1000, SDL_WINDOW_FULLSCREEN_DESKTOP);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
     cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);
@@ -224,6 +224,7 @@ void Window::drawAALine(double x0, double y0, Pixel* target) {
     float xgap = fpart(x0+0.5);
     float xpxl1 = xend;
     float ypxl1 = ipart(yend);
+    /*
     if (steep) {
         SDL_SetRenderDrawColor(renderer, redness, greenness, blueness, rfpart(yend)*xgap*brightness);
         SDL_RenderDrawPoint(renderer, ypxl1, xpxl1);
@@ -235,6 +236,7 @@ void Window::drawAALine(double x0, double y0, Pixel* target) {
         SDL_SetRenderDrawColor(renderer, redness, greenness, blueness, fpart(yend)*xgap*brightness);
         SDL_RenderDrawPoint(renderer, xpxl1, ypxl1+1);
     }
+    */
     float intery = yend+gradient; //First y-intersection for the main loop
     
     //Handle the second endpoint

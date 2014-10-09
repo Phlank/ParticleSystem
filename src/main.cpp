@@ -7,7 +7,7 @@
 
 using namespace std;
 
-enum {RAINBOW, GRAYSCALE, REDSCALE, GREENSCALE, BLUESCALE, PURPLESCALE, ORANGESCALE, YELLOWSCALE, CYANSCALE};
+enum {RAINBOW, GRAYSCALE, REDSCALE, GREENSCALE, BLUESCALE, PURPLESCALE, ORANGESCALE, YELLOWSCALE, CYANSCALE, RGB};
 enum {VEL, ACC, JER};
 
 bool done;
@@ -99,6 +99,13 @@ void setPixelColors(Pixel* p1, Pixel* p2, Pixel* p3) {
             p1->setColor(temp1/2, temp1/2, temp1);
             p2->setColor(temp2/2, temp2/2, temp2);
             p3->setColor(temp3/2, temp3/2, temp3);
+	    break;
+	/* P1=Red P2=Green P3=Blue */
+	case RGB:
+	    p1->setColor(255, 0, 0);
+	    p2->setColor(0, 255, 0);
+	    p3->setColor(0, 0, 255);
+	    break;
         default:
             break;
     }
@@ -227,6 +234,9 @@ void processEvents(SDL_Event event) {
                 case SDLK_8:
                     colormode = CYANSCALE;
                     break;
+		case SDLK_9:
+		    colormode = RGB;
+		    break;
                 default:
                     break;
             }
