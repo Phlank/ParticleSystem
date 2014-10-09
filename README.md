@@ -22,7 +22,7 @@ to increase, but all existing particles will perish.  The screen will not be cle
 <li>K - toggle automatic particle destruction.  If enabled, particles
 will die after a set amount of frames. (Default: enabled)</li>
 <li>F - center the cursor on the screen.</li>
-<li>B - toggle the blend mode between blending and adding. (Default: blending)</li>
+<li>B - toggle the blend mode between blending, adding, and replacing. (Default: blending)</li>
 <li>Pressing certain numbers will change the types of colors that particles will appear as.
 <ul>
 <li>0 - Rainbow (Default)</li>
@@ -33,6 +33,8 @@ will die after a set amount of frames. (Default: enabled)</li>
 <li>5 - Purplescale</li>
 <li>6 - Orangescale</li>
 <li>7 - Yellowscale</li>
+<li>8 - Cyanscale</li>
+<li>9 - RGB</li>
 </ul></li>
 <li>Up/Down - Change the scale of the initial velocity. (Default: 1.0)</li>
 <li>Left Control + Up/Down - Change the scale of the initial acceleration. (Default: 1.0)</li>
@@ -50,8 +52,6 @@ Particle class, using surfaces or textures instead of individual pixel colors.
 Feel free to use this without any credit to me.</p>
 
 <h2>Plans for future development</h2>
-<ul>
-<li>More color options</li>
-<li>Ability to change scaling for velocity, acceleration, and jerk</li>
-<li>Android app?</li>
-</ul>
+<p>I'm currently in the process of considering whether or not to expand this to react to sound input
+as a visualizer. I think it would be great for live performances, but it would probably be best if I
+cleaned up the source code a significant amount before I undertake that action.</p>
